@@ -31,7 +31,7 @@ Client
 ```
 
 ## 패키지 레이어링
-```aidl
+```plsql
 com.example.KTB_4WEEK
 ├─ Interceptor/
 │  ├─ auth/
@@ -87,7 +87,7 @@ com.example.KTB_4WEEK
 ```
 
 ## 공통 요청 처리 플로우
-```aidl
+```plsql
 Client
   └─ HTTP JSON 요청
       (예: POST /posts, PATCH /users/{id})
@@ -140,7 +140,7 @@ public enum ResponseMessage {
 ```
 
 ### Response
-```aidl
+```plsql
 {
     "status": 0,
     "message": "Login Success",
@@ -152,7 +152,7 @@ public enum ResponseMessage {
 }
 ```
 ## 공통 예외처리 플로우
-```aidl
+```plsql
 [Service]   (에러가 발생하는 지점)
    └─ throw new SomeBusinessException();   // e.g., new UnAuthorizedException()
 
