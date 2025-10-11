@@ -22,6 +22,7 @@ public class TokenService {
     private static final Base64.Decoder decoder = Base64.getUrlDecoder();
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
+    // 토큰 발급
     public String issue(long userId, Duration ttl) {
         long now = System.currentTimeMillis();
         long exp = now + ttl.toMillis();
@@ -45,6 +46,7 @@ public class TokenService {
         return token;
     }
 
+    // 토큰 검증
     public Optional<Long> verify(String token) {
         String[] parts = token.split("\\.");
         if (parts.length != 3) return null;
@@ -71,7 +73,7 @@ public class TokenService {
         return Optional.ofNullable(userId);
     }
 
-
+    // Object -> byte[] -> Base64 Encode
     private String base64UrlEncode(Map<String, Object> toByte) {
         try {
             byte[] json = objectMapper.writeValueAsBytes(toByte);
@@ -81,6 +83,7 @@ public class TokenService {
         }
     }
 
+    // Base64 Decode -> byte[] -> Object
     private Map<String, Object> base64UrlDecode(String encrypted) {
         try {
             byte[] json = decoder.decode(encrypted);
@@ -91,6 +94,7 @@ public class TokenService {
         }
     }
 
+    // Encrypt By Hmac SHA256
     private String encryptByHmacSHA256(String target) {
         try {
             Mac mac = Mac.getInstance("HmacSHA256");
