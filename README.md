@@ -193,7 +193,7 @@ public enum ErrorCode {
     INVALID_COMMENT_ID(400, HttpStatus.BAD_REQUEST, "CommentId은 1이상 입니다."),
 ```
 
-### Exception extends Exception
+### Exception < Business Exception < RuntimeException
 ```java
 // UserNotFoundException extends BusinessException
 public class UserNotFoundException extends BusinessException {
