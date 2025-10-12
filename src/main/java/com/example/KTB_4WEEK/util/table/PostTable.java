@@ -12,18 +12,18 @@ public class PostTable implements Table {
     private long sequence = 0L;
 
     public PostTable() {
-        posts.put(++sequence,
-                new Post(sequence, 1, "title", "article",
-                        PostCategory.COMMUNITY, "image"));
-        posts.put(++sequence,
-                new Post(sequence, 1, "title1", "article1",
-                        PostCategory.COMMUNITY, "image1"));
-        posts.put(++sequence,
-                new Post(sequence, 2, "title2", "article2",
-                        PostCategory.COMMUNITY, "image2"));
-        posts.put(++sequence,
-                new Post(sequence, 2, "title3", "article2",
-                        PostCategory.COMMUNITY, "image3"));
+//        posts.put(++sequence,
+//                new Post(sequence, 1, "title", "article",
+//                        PostCategory.COMMUNITY, "image"));
+//        posts.put(++sequence,
+//                new Post(sequence, 1, "title1", "article1",
+//                        PostCategory.COMMUNITY, "image1"));
+//        posts.put(++sequence,
+//                new Post(sequence, 2, "title2", "article2",
+//                        PostCategory.COMMUNITY, "image2"));
+//        posts.put(++sequence,
+//                new Post(sequence, 2, "title3", "article2",
+//                        PostCategory.COMMUNITY, "image3"));
     }
 
     @Override

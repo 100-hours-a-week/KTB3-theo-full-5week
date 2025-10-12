@@ -8,6 +8,7 @@ import com.example.KTB_4WEEK.dto.response.user.*;
 import com.example.KTB_4WEEK.entity.User;
 import com.example.KTB_4WEEK.exception.user.*;
 import com.example.KTB_4WEEK.repository.user.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -11,15 +11,15 @@ public class CommentTable implements Table {
     private long sequence = 0L;
 
     public CommentTable() {
-        comments.put(++sequence, new Comment(sequence, 1, 1, "댓글 1"));
-        comments.put(++sequence, new Comment(sequence, 1, 1, "댓글 2"));
-        comments.put(++sequence, new Comment(sequence, 1, 1, "댓글 3"));
-        comments.put(++sequence, new Comment(sequence, 1, 1, "댓글 4"));
-
-        comments.put(++sequence, new Comment(sequence, 2, 2, "댓글 1"));
-        comments.put(++sequence, new Comment(sequence, 2, 2, "댓글 2"));
-        comments.put(++sequence, new Comment(sequence, 2, 2, "댓글 3"));
-        comments.put(++sequence, new Comment(sequence, 2, 2, "댓글 4"));
+//        comments.put(++sequence, new Comment(sequence, 1, 1, "댓글 1"));
+//        comments.put(++sequence, new Comment(sequence, 1, 1, "댓글 2"));
+//        comments.put(++sequence, new Comment(sequence, 1, 1, "댓글 3"));
+//        comments.put(++sequence, new Comment(sequence, 1, 1, "댓글 4"));
+//
+//        comments.put(++sequence, new Comment(sequence, 2, 2, "댓글 1"));
+//        comments.put(++sequence, new Comment(sequence, 2, 2, "댓글 2"));
+//        comments.put(++sequence, new Comment(sequence, 2, 2, "댓글 3"));
+//        comments.put(++sequence, new Comment(sequence, 2, 2, "댓글 4"));
     }
 
     @Override

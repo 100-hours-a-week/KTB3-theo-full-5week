@@ -117,7 +117,6 @@ Client
 ### BaseResponse
 ```java
 public class BaseResponse<T> {
-    private int status;
     private String message;
     private T data;
     private String timestamp;
@@ -142,7 +141,6 @@ public enum ResponseMessage {
 ### Response
 ```plsql
 {
-    "status": 0,
     "message": "Login Success",
     "data": {
         "id": 1,
