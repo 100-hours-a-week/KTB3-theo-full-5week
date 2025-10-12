@@ -6,9 +6,6 @@ import org.springframework.web.client.HttpClientErrorException;
 
 public enum ErrorCode {
 
-    // COMMON
-
-
     // USER
     INVALID_PASSWORD(400, HttpStatus.BAD_REQUEST, "비밀번호 형식 불일치(8자 이상 20자 이하 / 대문자, 소문자, 숫자, 특수문자 각각 1개씩 포함해야 합니다."),
     INVALID_EMAIL(400, HttpStatus.BAD_REQUEST, "이메일 형식 불일치 ex) test@test.com"),

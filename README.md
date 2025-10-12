@@ -170,4 +170,59 @@ public enum ResponseMessage {
    └─ ResponseEntity.status(ec.getStatus()).body(errorResponse)
         (HTTP 상태와 바디를 일관된 방식으로 클라이언트에 반환)
 ```
+### ErrorResponseEntity
+```java
+public class ErrorResponseEntity {
+    private int code;
+    private HttpStatus status;
+    private String message;
+    private String path;
+}
+```
+### ErrorCode
+```java
+public enum ErrorCode {
+    // USER
+    INVALID_PASSWORD(400, HttpStatus.BAD_REQUEST, "비밀번호 형식 불일치(8자 이상 20자 이하 / 대문자, 소문자, 숫자, 특수문자 각각 1개씩 포함해야 합니다."),
+    INVALID_EMAIL(400, HttpStatus.BAD_REQUEST, "이메일 형식 불일치 ex) test@test.com"),
+    // POST
+    INVALID_POST_ID(400, HttpStatus.BAD_REQUEST, "PostId은 1이상 입니다."),
+    POST_TITLE_LENGTH_OVER(400, HttpStatus.BAD_REQUEST, "게시글 제목 최대 26자 입니다."),
+    // COMMENT
+    NO_COMMENT_NOT_ALLOWED(400, HttpStatus.BAD_REQUEST, "댓글은 1자 이상 입니다."),
+    INVALID_COMMENT_ID(400, HttpStatus.BAD_REQUEST, "CommentId은 1이상 입니다."),
+```
 
+### Exception extends Exception
+```java
+// UserNotFoundException extends BusinessException
+public class UserNotFoundException extends BusinessException {
+
+    public UserNotFoundException() {
+        super(ErrorCode.USER_NOT_FOUND);
+    }
+
+}
+// Business Exception.class
+// 서비스에서 발생하는 예외는 아래 예외를 상속받아 처리한다.
+public class BusinessException extends RuntimeException{
+    private final ErrorCode errorCode;
+
+    public BusinessException(ErrorCode errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public ErrorCode getErrorCode() {
+        return errorCode;
+    }
+}
+```
+### Error Response
+```plsql
+{
+    "code": 404,
+    "status": "NOT_FOUND",
+    "message": "사용자를 찾을 수 없습니다.",
+    "path": "/auth/login"
+}
+```
