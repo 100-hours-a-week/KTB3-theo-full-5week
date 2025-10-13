@@ -41,7 +41,7 @@ public class PublicPostService {
      **/
     // 게시글 생성
     public BaseResponse<CreateCommentResponseDto> createPost(CreatePostRequestDto req) {
-        Post toSave = new Post(req.getTitle(), req.getArticle(), req.getArticleImage(), req.getCategory());
+        Post toSave = new Post(req.getAuthorId(), req.getTitle(), req.getArticle(), req.getArticleImage(), req.getCategory());
         Post saved = postRepository.createPost(toSave).orElseThrow(() -> new PostCreateException());
         return new BaseResponse(ResponseMessage.POST_REGISTER_SUCCESS, new CreatePostResponseDto(saved.getId()));
     }

@@ -121,6 +121,6 @@ public class PublicPostController {
         postValidator.validPostId(postId);
         postValidator.validCommentId(commentId);
         BaseResponse response = publicPostService.deleteCommentById(postId, commentId);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
