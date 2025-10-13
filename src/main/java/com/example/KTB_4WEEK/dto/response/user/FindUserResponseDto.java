@@ -9,16 +9,16 @@ public class FindUserResponseDto {
     private long id;
     private String email;
     private String nickname;
-    private String profile_image;
+    private String profileImage;
     private String created_at;
     private String updated_at;
 
     public FindUserResponseDto(long id, String email, String nickname,
-                               String profile_image, LocalDateTime created_at, LocalDateTime updated_at) {
+                               String profileImage, LocalDateTime created_at, LocalDateTime updated_at) {
         this.id = id;
         this.email = email;
         this.nickname = nickname;
-        this.profile_image = profile_image;
+        this.profileImage = profileImage;
         this.created_at = created_at.format(
                 DateTimeFormatter.ofPattern(DateTimePattern.DEFAULT_DATE_TIME));
         this.updated_at = updated_at.format(
@@ -37,8 +37,8 @@ public class FindUserResponseDto {
         return nickname;
     }
 
-    public String getProfile_image() {
-        return profile_image;
+    public String getProfileImage() {
+        return profileImage;
     }
 
     public String getCreated_at() {

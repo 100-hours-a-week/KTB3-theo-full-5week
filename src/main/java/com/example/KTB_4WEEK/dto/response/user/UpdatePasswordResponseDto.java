@@ -7,12 +7,10 @@ import java.time.format.DateTimeFormatter;
 
 public class UpdatePasswordResponseDto {
     private long id;
-    private String password;
     private String updatedAt;
 
-    public UpdatePasswordResponseDto(long id, String password) {
+    public UpdatePasswordResponseDto(long id) {
         this.id = id;
-        this.password = password;
         this.updatedAt = LocalDateTime.now().format(
                 DateTimeFormatter.ofPattern(DateTimePattern.DEFAULT_DATE_TIME));
 
@@ -20,10 +18,6 @@ public class UpdatePasswordResponseDto {
 
     public long getId() {
         return id;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public String getUpdatedAt() {

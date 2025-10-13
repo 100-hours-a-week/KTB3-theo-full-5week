@@ -124,7 +124,7 @@ public class PublicUserService {
         User updated = userRepository.updateById(userId, toUpdate).orElseThrow(() -> new UserUpdateException());
 
         return new BaseResponse(ResponseMessage.PASSWORD_CHANGE_SUCCESS,
-                new UpdatePasswordResponseDto(updated.getId(), updated.getPassword()));
+                new UpdatePasswordResponseDto(updated.getId()));
     }
 
     /**

@@ -5,15 +5,11 @@ import com.example.KTB_4WEEK.util.table.PostTable;
 import com.example.KTB_4WEEK.util.table.CommentTable;
 import com.example.KTB_4WEEK.entity.Post;
 import com.example.KTB_4WEEK.entity.Comment;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.plaf.OptionPaneUI;
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 
 
 @Repository
