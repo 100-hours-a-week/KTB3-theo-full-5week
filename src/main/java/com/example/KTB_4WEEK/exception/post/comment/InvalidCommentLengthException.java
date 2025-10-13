@@ -5,6 +5,6 @@ import com.example.KTB_4WEEK.exception.handler.ErrorCode;
 
 public class InvalidCommentLengthException extends BusinessException {
     public InvalidCommentLengthException() {
-        super(ErrorCode.POST_TITLE_LENGTH_OVER);
+        super(ErrorCode.NO_COMMENT_NOT_ALLOWED);
     }
 }

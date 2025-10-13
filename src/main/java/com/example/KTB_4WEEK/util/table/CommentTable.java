@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 @Component
 public class CommentTable implements Table {
     private LinkedHashMap<Long, Comment> comments = new LinkedHashMap<>();
-    private long sequence = 0L;
+    private long sequence = 1L;
 
     public CommentTable() {
 //        comments.put(++sequence, new Comment(sequence, 1, 1, "댓글 1"));
@@ -28,6 +28,6 @@ public class CommentTable implements Table {
     }
 
     public long increaseSequence() {
-        return ++this.sequence;
+        return sequence++;
     }
 }

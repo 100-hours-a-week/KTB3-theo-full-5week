@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserTable implements Table {
     private LinkedHashMap<Long, User> users = new LinkedHashMap<>();
-    private long sequence = 0L;
+    private long sequence = 1L;
 
     public UserTable() {
 //        users.put(++sequence, new User(sequence,

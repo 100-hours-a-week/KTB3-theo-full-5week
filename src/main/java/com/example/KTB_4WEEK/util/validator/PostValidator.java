@@ -25,7 +25,7 @@ public class PostValidator extends Validator {
     }
 
     private void validatePostTitleLength(String title) {
-        if (!title.matches("^{1,26}$")) {
+        if (!title.matches("^.{1,26}$")) {
             throw new InvalidPostTitleLengthException();
         }
     }

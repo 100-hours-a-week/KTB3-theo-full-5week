@@ -1,5 +1,6 @@
 package com.example.KTB_4WEEK.repository.post;
 
+import com.example.KTB_4WEEK.exception.post.comment.CommentNotFoundException;
 import com.example.KTB_4WEEK.util.table.PostTable;
 import com.example.KTB_4WEEK.util.table.CommentTable;
 import com.example.KTB_4WEEK.entity.Post;
@@ -86,7 +87,7 @@ public class PublicPostRepository implements PostRepository {
 
     // Comment 삭제 By ID
     public Optional<Comment> deleteCommentById(long id) {
-        Comment deleteComment = findCommentById(id).get();
+        Comment deleteComment = findCommentById(id).orElseThrow(() -> new CommentNotFoundException());
         deleteComment.setDeleted(true);
         updateCommentById(id, deleteComment);
         return Optional.ofNullable(commentTable.getTable().remove(id));

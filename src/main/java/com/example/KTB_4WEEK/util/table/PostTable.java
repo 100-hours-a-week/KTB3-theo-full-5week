@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PostTable implements Table {
     private LinkedHashMap<Long, Post> posts = new LinkedHashMap<>();
-    private long sequence = 0L;
+    private long sequence = 1L;
 
     public PostTable() {
 //        posts.put(++sequence,
@@ -32,7 +32,7 @@ public class PostTable implements Table {
     }
 
     public long increaseSequence() {
-        return ++sequence;
+        return sequence++;
     }
 
 }

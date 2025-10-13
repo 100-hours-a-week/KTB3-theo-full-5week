@@ -48,7 +48,6 @@ public class PublicUserController {
 
     @PostMapping("/logout") // 로그아웃
     public ResponseEntity<BaseResponse> logout(HttpServletRequest request) {
-        System.out.println(request.getHeader("Authorization"));
         BaseResponse response = publicUserService.logout();
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }

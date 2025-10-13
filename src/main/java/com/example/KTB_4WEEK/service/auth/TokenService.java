@@ -49,25 +49,22 @@ public class TokenService {
     // 토큰 검증
     public Optional<Long> verify(String token) {
         String[] parts = token.split("\\.");
-        if (parts.length != 3) return null;
-        for (String part : parts) {
-            System.out.println(part);
-        }
+        if (parts.length != 3) return Optional.ofNullable(null);
 
         Map<String, Object> header = base64UrlDecode(parts[0]);
         Map<String, Object> payload = base64UrlDecode(parts[1]);
 
         if (!header.get("alg").equals("HS256") || !header.get("typ").equals("JWT")) {
-            return null;
+            return Optional.ofNullable(null);
         }
 
         if (!parts[2].equals(encryptByHmacSHA256(parts[0] + "." + parts[1]))) {
-            return null;
+            return Optional.ofNullable(null);
         }
 
         long now = System.currentTimeMillis();
         long exp = ((Number) payload.get("exp")).longValue();
-        if (exp < now) return null;
+        if (exp < now) return Optional.ofNullable(null);
 
         long userId = ((Number) payload.get("sub")).longValue(); // userId
         return Optional.ofNullable(userId);
