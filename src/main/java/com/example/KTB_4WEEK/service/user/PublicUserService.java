@@ -77,11 +77,16 @@ public class PublicUserService {
 
     // 회원정보 삭제
     public BaseResponse deleteById(long id) {
-        userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
+        User toDelete = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
 
-        userRepository.deleteById(id).orElseThrow(() -> new UserDeleteException());
+        User deleted = userRepository.deleteById(id).orElseThrow(() -> new UserDeleteException());
 
+        deleteUserEmailMapping(deleted.getEmail());
         return new BaseResponse(ResponseMessage.USER_DELETE_SUCCESS, new User());
+    }
+
+    private void deleteUserEmailMapping(String email) {
+        emailRepository.deleteUserByEmail(email).orElseThrow(() -> new UserEmailMappingDeleteException());
     }
 
     // 닉네임 중복 검사
