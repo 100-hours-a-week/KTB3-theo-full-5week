@@ -114,7 +114,7 @@ public class PublicUserService {
         if (checkNicknameAvailability(nickname)) throw new NicknameAlreadyRegisteredException();
 
         User toUpdate = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
-        toUpdate.setNickname(nickname);
+        toUpdate.updateNickname(nickname);
 
         User updated = userRepository.updateById(userId, toUpdate).orElseThrow(() -> new NicknameUpdateException());
 
@@ -127,7 +127,7 @@ public class PublicUserService {
         String password = req.getPassword();
 
         User toUpdate = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
-        toUpdate.setPassword(password);
+        toUpdate.updatePassword(password);
 
         User updated = userRepository.updateById(userId, toUpdate).orElseThrow(() -> new UserUpdateException());
 

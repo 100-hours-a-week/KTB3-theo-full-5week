@@ -83,10 +83,10 @@ public class PublicPostService {
 
         Post originPost = postRepository.findPostById(myPostId).orElseThrow(() -> new PostNotFoundException());
 
-        originPost.setTitle(req.getTitle());
-        originPost.setArticle(req.getArticle());
-        originPost.setArticleImage(req.getArticleImage());
-        originPost.setCategory(req.getCategory());
+        originPost.updateTitle(req.getTitle());
+        originPost.updateArticle(req.getArticle());
+        originPost.updateArticleImage(req.getArticleImage());
+        originPost.updateCategory(req.getCategory());
 
         Post updatedPost = postRepository.updatePostById(myPostId, originPost).orElseThrow(() -> new PostUpdateException());
 

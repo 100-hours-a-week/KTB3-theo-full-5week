@@ -1,6 +1,7 @@
 package com.example.KTB_4WEEK.entity;
 
 import com.example.KTB_4WEEK.dto.request.user.LoginRequestDto;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 
@@ -14,24 +15,25 @@ public class User {
     private LocalDateTime updatedAt = createdAt;
     private boolean isDeleted = false;
 
-    public User() {}
-
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
+    public User() {
     }
 
-    public User(long id, String email, String password,
-                String nickname, String profileImage) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.nickname = nickname;
-        this.profileImage = profileImage;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = this.createdAt;
-        this.isDeleted = false;
-    }
+//    public User(String email, String password) {
+//        this.email = email;
+//        this.password = password;
+//    }
+//
+//    public User(long id, String email, String password,
+//                String nickname, String profileImage) {
+//        this.id = id;
+//        this.email = email;
+//        this.password = password;
+//        this.nickname = nickname;
+//        this.profileImage = profileImage;
+//        this.createdAt = LocalDateTime.now();
+//        this.updatedAt = this.createdAt;
+//        this.isDeleted = false;
+//    }
 
     public User(String email, String password,
                 String nickname, String profileImage) {
@@ -44,40 +46,20 @@ public class User {
         this.isDeleted = false;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public long getId() {
         return id;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getPassword() {
         return password;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public String getNickname() {
         return nickname;
-    }
-
-    public void setProfileImage(String profileImage) {
-        this.profileImage = profileImage;
     }
 
     public String getProfileImage() {
@@ -88,10 +70,6 @@ public class User {
         return createdAt;
     }
 
-    public void setUpdatedAt(LocalDateTime now) {
-        this.updatedAt = now;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
@@ -100,8 +78,24 @@ public class User {
         return this.isDeleted;
     }
 
-    public void setDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public void identify(long id) {
+        this.id = id;
+    }
+
+    public void updateNow() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void delete() {
+        this.isDeleted = true;
+    }
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void updatePassword(String password) {
+        this.password = password;
     }
 
     @Override

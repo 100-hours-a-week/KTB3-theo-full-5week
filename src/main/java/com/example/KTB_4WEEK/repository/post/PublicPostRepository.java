@@ -30,7 +30,7 @@ public class PublicPostRepository implements PostRepository {
     @Override // Post 생성
     public Optional<Post> createPost(Post post) {
         long postId = postTable.increaseSequence();
-        post.setId(postId);
+        post.identify(postId);
         postTable.getTable().put(postId, post);
         return Optional.ofNullable(postTable.getTable().get(postId));
     }
@@ -42,7 +42,7 @@ public class PublicPostRepository implements PostRepository {
 
     @Override // Post 수정 By Id
     public Optional<Post> updatePostById(long id, Post target) {
-        target.setUpdatedAt(LocalDateTime.now());
+        target.updateNow();
         postTable.getTable().put(id, target);
         return Optional.ofNullable(postTable.getTable().get(id));
     }
@@ -50,7 +50,7 @@ public class PublicPostRepository implements PostRepository {
     @Override // Post 삭제 By Id
     public Optional<Post> deletePostById(long id) {
         Post deletePost = findPostById(id).get();
-        deletePost.setDeleted(true);
+        deletePost.delete();
         updatePostById(id, deletePost);
         return Optional.ofNullable(postTable.getTable().remove(id));
     }

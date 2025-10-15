@@ -19,17 +19,10 @@ public class Post {
     private LocalDateTime updatedAt = this.createdAt;
     private boolean isDeleted = false;
 
-    public Post() {};
-
-    public Post(long id, long authorId, String title, String article, PostCategory category, String articleImage) {
-        this.id = id;
-        this.authorId = authorId;
-        this.title = title;
-        this.article = article;
-        this.category = category;
-        this.articleImage = articleImage;
-
+    public Post() {
     }
+
+    ;
 
     public Post(long authorId, String title, String article, String articleImage, PostCategory category) {
         this.authorId = authorId;
@@ -40,23 +33,8 @@ public class Post {
 
     }
 
-    public Post(String title, String article, String articleImage, PostCategory category) {
-        this.title = title;
-        this.article = article;
-        this.articleImage = articleImage;
-        this.category = category;
-    }
-
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setAuthorId(long authorId) {
-        this.authorId = authorId;
     }
 
     public long getAuthorId() {
@@ -67,72 +45,63 @@ public class Post {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getArticle() {
         return article;
-    }
-
-    public void setArticle(String article) {
-        this.article = article;
     }
 
     public PostCategory getCategory() {
         return category;
     }
 
-    public void setCategory(PostCategory category) {
-        this.category = category;
-    }
-
     public int getHit() {
         return hit;
-    }
-
-    public void setHit(int hit) {
-        this.hit = hit;
     }
 
     public int getLike() {
         return like;
     }
 
-    public void setLike(int like) {
-        this.like = like;
-    }
-
     public String getArticleImage() {
         return articleImage;
-    }
-
-    public void setArticleImage(String articleImage) {
-        this.articleImage = articleImage;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public boolean isDeleted() {
         return isDeleted;
     }
 
-    public void setDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public void identify(long id) {
+        identify(id);
+    }
+    public void updateTitle(String title) {
+        this.title = title;
+    }
+
+    public void updateArticle(String article) {
+        this.article = article;
+    }
+
+    public void updateArticleImage(String articleImage) {
+        this.articleImage = articleImage;
+    }
+
+    public void updateCategory(PostCategory category) {
+        this.category = category;
+    }
+
+    public void updateNow() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void delete() {
+        this.isDeleted = true;
     }
 
     @Override

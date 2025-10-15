@@ -32,14 +32,14 @@ public class PublicUserRepository implements UserRepository {
     public Optional<User> regist(User user) {
         ConcurrentHashMap<Long, User> users = userTable.getTable();
         long userId = userTable.increaseSequence();
-        user.setId(userId);
+        user.identify(userId);
         users.put(userId, user);
         return Optional.ofNullable(users.get(userId));
     }
 
     @Override // User 수정 By Id
     public Optional<User> updateById(long id, User target) {
-        target.setUpdatedAt(LocalDateTime.now());
+        target.updateNow();
         userTable.getTable().put(id, target);
         return Optional.ofNullable(userTable.getTable().get(id));
     }
@@ -47,7 +47,7 @@ public class PublicUserRepository implements UserRepository {
     @Override // User 삭제 By Id
     public Optional<User> deleteById(long id) {
         User delete_user = findById(id).get();
-        delete_user.setDeleted(true);
+        delete_user.delete();
         updateById(id, delete_user);
         return Optional.ofNullable(userTable.getTable().remove(id));
     }
