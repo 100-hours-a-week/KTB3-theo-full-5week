@@ -19,6 +19,7 @@ public enum ErrorCode {
     USER_CREATE_ERROR(500, HttpStatus.INTERNAL_SERVER_ERROR, "유저 생성 실패"),
     USER_DELETE_ERROR(500, HttpStatus.INTERNAL_SERVER_ERROR, "유저 삭제 실패"),
     NICKNAME_UPDATE_ERROR(500, HttpStatus.INTERNAL_SERVER_ERROR, "유저 닉네임 수정 실패"),
+    FAIL_USER_EMAIL_MAPPING(500,HttpStatus.INTERNAL_SERVER_ERROR, "유저&이메일 매핑 실패"),
 
 
     // POST

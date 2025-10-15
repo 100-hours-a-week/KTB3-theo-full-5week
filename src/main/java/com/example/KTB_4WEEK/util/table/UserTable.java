@@ -4,11 +4,11 @@ import java.util.LinkedHashMap;
 
 import com.example.KTB_4WEEK.entity.User;
 import org.springframework.stereotype.Component;
-
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class UserTable implements Table {
-    private LinkedHashMap<Long, User> users = new LinkedHashMap<>();
+    private ConcurrentHashMap<Long, User> users = new ConcurrentHashMap<>();
     private long sequence = 1L;
 
     public UserTable() {
@@ -21,7 +21,7 @@ public class UserTable implements Table {
     }
 
     @Override // DB User Table 조회
-    public LinkedHashMap<Long, User> getTable() {
+    public ConcurrentHashMap<Long, User> getTable() {
         return users;
     }
 

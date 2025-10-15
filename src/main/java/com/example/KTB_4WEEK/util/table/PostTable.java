@@ -1,6 +1,7 @@
 package com.example.KTB_4WEEK.util.table;
 
 import java.util.LinkedHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.example.KTB_4WEEK.entity.Post;
 import com.example.KTB_4WEEK.entity.PostCategory;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PostTable implements Table {
-    private LinkedHashMap<Long, Post> posts = new LinkedHashMap<>();
+    private ConcurrentHashMap<Long, Post> posts = new ConcurrentHashMap<>();
     private long sequence = 1L;
 
     public PostTable() {
@@ -27,7 +28,7 @@ public class PostTable implements Table {
     }
 
     @Override
-    public LinkedHashMap<Long, Post> getTable() {
+    public ConcurrentHashMap<Long, Post> getTable() {
         return posts;
     }
 

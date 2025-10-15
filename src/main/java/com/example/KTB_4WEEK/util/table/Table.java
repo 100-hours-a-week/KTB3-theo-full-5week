@@ -1,9 +1,10 @@
 package com.example.KTB_4WEEK.util.table;
 
 import java.util.LinkedHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 // Table 인터페이스
 public interface Table<T> {
-    LinkedHashMap<Long, T> getTable();
+    ConcurrentHashMap<Long, T> getTable();
 
 }

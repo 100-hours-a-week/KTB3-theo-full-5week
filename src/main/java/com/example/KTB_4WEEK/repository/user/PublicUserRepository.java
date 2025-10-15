@@ -2,12 +2,13 @@ package com.example.KTB_4WEEK.repository.user;
 
 import com.example.KTB_4WEEK.entity.User;
 import com.example.KTB_4WEEK.util.table.UserTable;
+import com.example.KTB_4WEEK.util.table.EmailTable;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class PublicUserRepository implements UserRepository {
@@ -29,7 +30,7 @@ public class PublicUserRepository implements UserRepository {
 
     @Override // 회원가입
     public Optional<User> regist(User user) {
-        LinkedHashMap<Long, User> users = userTable.getTable();
+        ConcurrentHashMap<Long, User> users = userTable.getTable();
         long userId = userTable.increaseSequence();
         user.setId(userId);
         users.put(userId, user);

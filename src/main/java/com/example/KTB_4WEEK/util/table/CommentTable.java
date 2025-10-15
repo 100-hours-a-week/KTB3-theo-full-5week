@@ -4,10 +4,11 @@ import com.example.KTB_4WEEK.entity.Comment;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class CommentTable implements Table {
-    private LinkedHashMap<Long, Comment> comments = new LinkedHashMap<>();
+    private ConcurrentHashMap<Long, Comment> comments = new ConcurrentHashMap<>();
     private long sequence = 1L;
 
     public CommentTable() {
@@ -23,7 +24,7 @@ public class CommentTable implements Table {
     }
 
     @Override
-    public LinkedHashMap<Long, Comment> getTable() {
+    public ConcurrentHashMap<Long, Comment> getTable() {
         return this.comments;
     }
 

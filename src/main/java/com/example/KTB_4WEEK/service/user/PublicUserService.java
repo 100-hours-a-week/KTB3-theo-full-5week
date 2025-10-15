@@ -8,7 +8,7 @@ import com.example.KTB_4WEEK.dto.response.user.*;
 import com.example.KTB_4WEEK.entity.User;
 import com.example.KTB_4WEEK.exception.user.*;
 import com.example.KTB_4WEEK.repository.user.UserRepository;
-import org.springframework.http.HttpStatus;
+import com.example.KTB_4WEEK.repository.user.email.EmailRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +16,12 @@ import java.util.List;
 @Service
 public class PublicUserService {
     private final UserRepository userRepository;
+    private final EmailRepository emailRepository;
 
     // 생성자 DI
-    public PublicUserService(UserRepository publicUserRepository) {
+    public PublicUserService(UserRepository publicUserRepository, EmailRepository emailRepository) {
         this.userRepository = publicUserRepository;
+        this.emailRepository = emailRepository;
     }
 
     /**
@@ -54,8 +56,15 @@ public class PublicUserService {
 
         User toSave = new User(email, req.getPassword(), req.getNickname(), req.getProfileImage());
         User saved = userRepository.regist(toSave).orElseThrow(() -> new UserCreateException());
+
+        mapUserByEmail(saved);
         return new BaseResponse(ResponseMessage.USER_REGISTER_SUCCESS, new RegistUserResponseDto(saved.getId()));
 
+    }
+
+    // 이메일 : 유저 매핑 <- Search more Fast
+    private void mapUserByEmail(User user) {
+        emailRepository.mapUserByEMail(user).orElseThrow(() -> new FailUserEmailMappingException());
     }
 
     // 회원정보 조회
@@ -65,7 +74,6 @@ public class PublicUserService {
                 new FindUserResponseDto(user.getId(), user.getEmail(), user.getNickname(),
                         user.getProfileImage(), user.getCreatedAt(), user.getUpdatedAt()));
     }
-
 
     // 회원정보 삭제
     public BaseResponse deleteById(long id) {
@@ -145,12 +153,6 @@ public class PublicUserService {
 
     // 이메일 중복 검사
     private boolean checkEmailAvailability(String email) {
-        List<User> users = userRepository.findAll();
-        for (User user : users) {
-            if (user.getEmail().equals(email)) {
-                return true;
-            }
-        }
-        return false;
+        return emailRepository.findByEmail(email).isPresent();
     }
 }
