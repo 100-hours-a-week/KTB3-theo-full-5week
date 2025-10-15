@@ -18,23 +18,6 @@ public class User {
     public User() {
     }
 
-//    public User(String email, String password) {
-//        this.email = email;
-//        this.password = password;
-//    }
-//
-//    public User(long id, String email, String password,
-//                String nickname, String profileImage) {
-//        this.id = id;
-//        this.email = email;
-//        this.password = password;
-//        this.nickname = nickname;
-//        this.profileImage = profileImage;
-//        this.createdAt = LocalDateTime.now();
-//        this.updatedAt = this.createdAt;
-//        this.isDeleted = false;
-//    }
-
     public User(String email, String password,
                 String nickname, String profileImage) {
         this.email = email;
@@ -86,7 +69,7 @@ public class User {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public void delete() {
+    public void softDelete() {
         this.isDeleted = true;
     }
 

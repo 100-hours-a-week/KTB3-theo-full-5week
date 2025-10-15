@@ -64,7 +64,7 @@ public class PublicUserService {
 
     // 이메일 : 유저 매핑 <- Search more Fast
     private void mapUserByEmail(User user) {
-        emailRepository.mapUserByEMail(user).orElseThrow(() -> new FailUserEmailMappingException());
+        emailRepository.mapUserByEmail(user).orElseThrow(() -> new FailUserEmailMappingException());
     }
 
     // 회원정보 조회
@@ -149,7 +149,6 @@ public class PublicUserService {
         }
         return false;
     }
-
 
     // 이메일 중복 검사
     private boolean checkEmailAvailability(String email) {

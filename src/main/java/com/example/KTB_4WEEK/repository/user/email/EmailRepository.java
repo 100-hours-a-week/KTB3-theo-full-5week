@@ -21,9 +21,17 @@ public class EmailRepository {
     }
 
     // Insert User to Email Table
-    public Optional<User> mapUserByEMail(User user) {
+    public Optional<User> mapUserByEmail(User user) {
         ConcurrentHashMap<String, User> emails = emailTable.getTable();
         emails.put(user.getEmail(), user);
         return Optional.ofNullable(emails.get(user.getEmail()));
     }
+
+    // Delete User to Email Table
+    public Optional<User> deleteUserByEmail(String email) {
+        ConcurrentHashMap<String, User> emails = emailTable.getTable();
+
+        return Optional.ofNullable(emails.remove(email));
+    }
+
 }

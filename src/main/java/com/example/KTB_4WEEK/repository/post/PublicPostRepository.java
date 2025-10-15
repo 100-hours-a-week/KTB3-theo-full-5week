@@ -58,7 +58,7 @@ public class PublicPostRepository implements PostRepository {
     // 댓글 생성
     public Optional<Comment> createComment(Comment comment) {
         long commentId = commentTable.increaseSequence();
-        comment.setId(commentId);
+        comment.identify(commentId);
         commentTable.getTable().put(commentId, comment);
         return Optional.ofNullable(commentTable.getTable().get(commentId));
     }
@@ -76,7 +76,7 @@ public class PublicPostRepository implements PostRepository {
 
     // Comment 수정 By ID
     public Optional<Comment> updateCommentById(long id, Comment target) {
-        target.setUpdatedAt(LocalDateTime.now());
+        target.updateNow();
         commentTable.getTable().put(id, target);
         return Optional.ofNullable(commentTable.getTable().get(id));
     }
@@ -84,7 +84,7 @@ public class PublicPostRepository implements PostRepository {
     // Comment 삭제 By ID
     public Optional<Comment> deleteCommentById(long id) {
         Comment deleteComment = findCommentById(id).orElseThrow(() -> new CommentNotFoundException());
-        deleteComment.setDeleted(true);
+        deleteComment.softDelete();
         updateCommentById(id, deleteComment);
         return Optional.ofNullable(commentTable.getTable().remove(id));
     }

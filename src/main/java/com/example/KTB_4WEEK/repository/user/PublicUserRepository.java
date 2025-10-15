@@ -47,7 +47,7 @@ public class PublicUserRepository implements UserRepository {
     @Override // User 삭제 By Id
     public Optional<User> deleteById(long id) {
         User delete_user = findById(id).get();
-        delete_user.delete();
+        delete_user.softDelete();
         updateById(id, delete_user);
         return Optional.ofNullable(userTable.getTable().remove(id));
     }

@@ -176,7 +176,7 @@ public class PublicPostService {
 
         Comment originComment = postRepository.findCommentById(commentId).orElseThrow(() -> new CommentNotFoundException());
 
-        originComment.setContent(req.getContent());
+        originComment.updateContent(req.getContent());
 
         Comment updatedComment = postRepository.updateCommentById(commentId, originComment).orElseThrow(() -> new CommentUpdateException());
 

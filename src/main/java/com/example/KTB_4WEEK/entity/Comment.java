@@ -36,55 +36,43 @@ public class Comment {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public long getPostId() {
         return postId;
-    }
-
-    public void setPostId(long postId) {
-        this.postId = postId;
     }
 
     public long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
     public String getContent() {
         return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public boolean isDeleted() {
         return isDeleted;
     }
 
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
+    public void identify(long id) {
+        this.id = id;
+    }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
+
+    public void updateNow() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void softDelete() {
+        this.isDeleted = true;
     }
 }
