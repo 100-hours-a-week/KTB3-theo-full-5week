@@ -4,12 +4,14 @@ import java.util.LinkedHashMap;
 
 import com.example.KTB_4WEEK.entity.User;
 import org.springframework.stereotype.Component;
+
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Component
 public class UserTable implements Table {
     private ConcurrentHashMap<Long, User> users = new ConcurrentHashMap<>();
-    private long sequence = 1L;
+    private AtomicLong sequence = new AtomicLong(1);
 
     public UserTable() {
 //        users.put(++sequence, new User(sequence,
@@ -26,7 +28,7 @@ public class UserTable implements Table {
     }
 
     public long increaseSequence() {
-        return sequence++;
+        return sequence.getAndIncrement();
     }
 
 }

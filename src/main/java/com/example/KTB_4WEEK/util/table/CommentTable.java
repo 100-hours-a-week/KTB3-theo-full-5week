@@ -5,11 +5,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Component
 public class CommentTable implements Table {
     private ConcurrentHashMap<Long, Comment> comments = new ConcurrentHashMap<>();
-    private long sequence = 1L;
+    private AtomicLong sequence = new AtomicLong(1);
 
     public CommentTable() {
 //        comments.put(++sequence, new Comment(sequence, 1, 1, "댓글 1"));
@@ -29,6 +30,6 @@ public class CommentTable implements Table {
     }
 
     public long increaseSequence() {
-        return sequence++;
+        return sequence.getAndIncrement();
     }
 }

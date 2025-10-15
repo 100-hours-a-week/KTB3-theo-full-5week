@@ -9,7 +9,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class EmailTable implements Table{
     private ConcurrentHashMap<String, User> emails = new ConcurrentHashMap<>();
 
-
     @Override
     public ConcurrentHashMap<String, User> getTable() {
         return this.emails;
