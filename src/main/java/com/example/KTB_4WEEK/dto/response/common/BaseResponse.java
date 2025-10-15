@@ -1,14 +1,19 @@
 package com.example.KTB_4WEEK.dto.response.common;
 
 import com.example.KTB_4WEEK.util.DateTimePattern;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class BaseResponse<T> {
+    @Schema(description = "응답 결과 메세지", example = "Login Success, Logout Success")
     private String message;
+    @Schema(description = "응답 바디 데이터", example = "T data")
     private T data;
+    @Schema(description = "API 처리 완료 시간", example = "2025-10-10 20:00:00")
     private String timestamp;
 
     public BaseResponse() {

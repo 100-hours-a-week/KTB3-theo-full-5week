@@ -1,7 +1,11 @@
 package com.example.KTB_4WEEK.dto.response.post.comment;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class CreateCommentResponseDto {
+    @Schema(description = "생성된 댓글의 PK", example = "1")
     private long id;
+    @Schema(description = "생성된 댓글 내용", example = "댓글 내용")
     private String content;
 
     public CreateCommentResponseDto(long id, String content) {

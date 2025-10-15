@@ -1,16 +1,23 @@
 package com.example.KTB_4WEEK.dto.response.user;
 
 import com.example.KTB_4WEEK.util.DateTimePattern;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class FindUserResponseDto {
+    @Schema(description = "조회된 유저 PK", example = "1")
     private long id;
+    @Schema(description = "유저 이메일", example = "test@test.com")
     private String email;
+    @Schema(description = "유저 닉네임", example = "닉네임")
     private String nickname;
+    @Schema(description = "유저 프로필 이미지 URL", example = "https://www.test.com")
     private String profileImage;
+    @Schema(description = "유저 생성 시간", example = "2025-10-10 20:00:00")
     private String created_at;
+    @Schema(description = "최근 유저 업데이트 시간", example = "2025-10-10 20:00:00")
     private String updated_at;
 
     public FindUserResponseDto(long id, String email, String nickname,

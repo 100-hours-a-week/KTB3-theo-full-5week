@@ -1,6 +1,9 @@
 package com.example.KTB_4WEEK.dto.response.post;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class CreatePostResponseDto {
+    @Schema(description = "생성된 게시글의 PK", example = "1")
     private long id;
 
     public CreatePostResponseDto(long id) {

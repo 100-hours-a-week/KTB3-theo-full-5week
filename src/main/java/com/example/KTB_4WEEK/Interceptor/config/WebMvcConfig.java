@@ -17,11 +17,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(tokenAuthInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/auth/**",
-                        "/user",
-                        "/user/nickname/double-check",
-                        "/user/email/double-check");
+//        registry.addInterceptor(tokenAuthInterceptor)
+//                .addPathPatterns("/**")
+//                .excludePathPatterns("/auth/**",
+//                        "/user",
+//                        "/user/nickname/double-check",
+//                        "/user/email/double-check",
+//                        "/swagger-ui/**");
     }
 }

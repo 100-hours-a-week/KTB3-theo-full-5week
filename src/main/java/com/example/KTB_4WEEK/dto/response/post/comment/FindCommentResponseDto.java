@@ -1,15 +1,21 @@
 package com.example.KTB_4WEEK.dto.response.post.comment;
 
 import com.example.KTB_4WEEK.util.DateTimePattern;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class FindCommentResponseDto {
+    @Schema(description = "조회한 댓글의 PK", example = "1")
     private long id;
+    @Schema(description = "조회한 댓글의 작성자(유저) PK", example = "1")
     private long userId;
+    @Schema(description = "조회한 댓글의 내용", example = "댓글 내용")
     private String content;
+    @Schema(description = "조회한 댓글의 생성 시간", example = "2025-10-16 20:00:00")
     private String created_at;
+    @Schema(description = "조회한 댓글의 최근 업데이트 시간", example = "2025-10-16 20:00:00")
     private String updated_at;
 
     public FindCommentResponseDto(long id, long userId, String content,

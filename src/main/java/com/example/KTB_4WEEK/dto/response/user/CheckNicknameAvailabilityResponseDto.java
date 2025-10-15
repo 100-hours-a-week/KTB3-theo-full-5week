@@ -1,7 +1,11 @@
 package com.example.KTB_4WEEK.dto.response.user;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class CheckNicknameAvailabilityResponseDto {
+    @Schema(description = "중복 검사 대상 닉네임", example = "nickname")
     private String nickname;
+    @Schema(description = "닉네임 사용가능 여부", example = "true/false")
     private boolean isAvailable;
 
     public CheckNicknameAvailabilityResponseDto(String nickname, boolean isAvailable) {
