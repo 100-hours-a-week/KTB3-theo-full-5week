@@ -1,5 +1,7 @@
 package com.example.KTB_4WEEK.dto.request.user;
 
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+
 public class RegistUserRequestDto {
     private String email;
     private String password;

@@ -59,7 +59,8 @@ public class UserValidator extends Validator{
 
     // 이메일 패턴 검사
     private void matchesEmailPattern(String email) {
-        if (!email.matches("^[A-Za-z]+(?:\\.[A-Za-z]+)*@[A-Za-z]+(?:\\.[A-Za-z]+)+$")) {
+        // RFC 5332 Email pattern
+        if (!email.matches("[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")) {
             throw new InvalidEmailException();
         }
     }
