@@ -8,7 +8,7 @@ public class Ktb5WeekApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(Ktb5WeekApplication.class, args);
-
+        System.out.println();
     }
 
 
