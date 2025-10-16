@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Ktb4WeekApplication {
+public class Ktb5WeekApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Ktb4WeekApplication.class, args);
+        SpringApplication.run(Ktb5WeekApplication.class, args);
 
     }
 
