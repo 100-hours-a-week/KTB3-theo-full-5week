@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class BaseResponse<T> {
-    @Schema(description = "응답 결과 메세지", example = "Login Success, Logout Success")
+    @Schema(description = "응답 결과 메세지", example = "응답 결과 메세지")
     private String message;
-    @Schema(description = "응답 바디 데이터", example = "T data")
+    @Schema(description = "응답 바디 데이터", example = "T data <- 응답 데이터")
     private T data;
     @Schema(description = "API 처리 완료 시간", example = "2025-10-10 20:00:00")
     private String timestamp;

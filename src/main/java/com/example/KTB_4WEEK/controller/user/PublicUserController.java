@@ -1,21 +1,24 @@
 package com.example.KTB_4WEEK.controller.user;
 
+import com.example.KTB_4WEEK.docs.controller.user.UserApiDoc;
 import com.example.KTB_4WEEK.dto.request.user.*;
 import com.example.KTB_4WEEK.dto.response.common.BaseResponse;
-import com.example.KTB_4WEEK.service.auth.TokenService;
 import com.example.KTB_4WEEK.service.user.PublicUserService;
 import com.example.KTB_4WEEK.util.validator.UserValidator;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Duration;
 
 @RestController
 @RequestMapping("/user")
-public class PublicUserController {
+public class PublicUserController implements UserApiDoc {
 
     private final PublicUserService publicUserService;
     private final UserValidator userValidator;
@@ -66,6 +69,14 @@ public class PublicUserController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PatchMapping("/{userId}/password") // 비밀번호 수정
+    public ResponseEntity<BaseResponse> changePassword(@PathVariable("userId") Long userId,
+                                                       @RequestBody PasswordChangeRequestDto request) {
+        userValidator.validPassword(request.getPassword());
+        BaseResponse response = publicUserService.changePassword(userId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
     /**
      * Patch Mapping
      **/
@@ -77,20 +88,12 @@ public class PublicUserController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PatchMapping("/{userId}/password") // 비밀번호 수정
-    public ResponseEntity<BaseResponse> changePassword(@PathVariable("userId") Long userId,
-                                                       @RequestBody PasswordChangeRequestDto request) {
-        userValidator.validPassword(request.getPassword());
-        BaseResponse response = publicUserService.changePassword(userId, request);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
 
     /**
      * Delete Mapping
      **/
     @DeleteMapping("/{userId}") // 회원정보 삭제
-    public ResponseEntity<BaseResponse> deletePublicUser(@PathVariable("userId") Long userId) {
+    public ResponseEntity<BaseResponse> deletePublicUser(Long userId) {
         BaseResponse response = publicUserService.deleteById(userId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }

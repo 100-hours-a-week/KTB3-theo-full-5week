@@ -8,7 +8,7 @@ public enum ErrorCode {
 
     // USER
     INVALID_PASSWORD(400, HttpStatus.BAD_REQUEST, "비밀번호 형식 불일치(8자 이상 20자 이하 / 대문자, 소문자, 숫자, 특수문자 각각 1개씩 포함해야 합니다."),
-    INVALID_EMAIL(400, HttpStatus.BAD_REQUEST, "이메일 형식 불일치 ex) test@test.com"),
+    INVALID_EMAIL(400, HttpStatus.BAD_REQUEST, "이메일 형식 불일치(영 대소문자, 숫자만 가능합니다) ex) test@test.com"),
     INVALID_NICKNAME_LENGTH(400, HttpStatus.BAD_REQUEST, "닉네임은 10글자 이내 입니다."),
     WHITESPACE_NOT_ALLOWED(400, HttpStatus.BAD_REQUEST, "공백, 띄워쓰기를 없애주세요"),
     INVALID_USER_ID(400, HttpStatus.BAD_REQUEST, "UserId은 1이상 입니다."),
@@ -58,6 +58,7 @@ public enum ErrorCode {
     public int getCode() {
         return this.code;
     }
+
     public HttpStatus getStatus() {
         return status;
     }

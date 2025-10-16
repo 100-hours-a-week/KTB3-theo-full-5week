@@ -1,5 +1,6 @@
 package com.example.KTB_4WEEK.controller.post;
 
+import com.example.KTB_4WEEK.docs.controller.post.PostApiDoc;
 import com.example.KTB_4WEEK.dto.request.post.CreatePostRequestDto;
 import com.example.KTB_4WEEK.dto.request.post.comment.UpdateCommentRequestDto;
 import com.example.KTB_4WEEK.dto.response.common.BaseResponse;
@@ -8,13 +9,14 @@ import com.example.KTB_4WEEK.dto.request.post.UpdateMyPostRequestDto;
 import com.example.KTB_4WEEK.dto.request.post.comment.CreateCommentRequestDto;
 
 import com.example.KTB_4WEEK.util.validator.PostValidator;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/post")
-public class PublicPostController {
+public class PublicPostController implements PostApiDoc {
 
     private final PublicPostService publicPostService;
     private final PostValidator postValidator;
@@ -27,7 +29,7 @@ public class PublicPostController {
     /**
      * Get Mapping
      **/
-    @GetMapping // 게시글 목록 조회
+    @GetMapping // 전체 게시글 목록 조회
     public ResponseEntity<BaseResponse> findPublicPosts(@RequestParam(name = "page", defaultValue = "1") int page) {
         BaseResponse response = publicPostService.findPosts(page);
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -58,6 +60,7 @@ public class PublicPostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+
     @PostMapping("/{postId}/hit") // 조회 수 증가
     public ResponseEntity<BaseResponse> increaseHit(@PathVariable("postId") Long postId) {
         postValidator.validCommentId(postId);
@@ -72,6 +75,7 @@ public class PublicPostController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+
     @PostMapping("/{postId}/comment") // 댓글 등록
     public ResponseEntity<BaseResponse> createComment(@PathVariable("postId") Long postId,
                                                       @RequestBody CreateCommentRequestDto request) {
@@ -85,15 +89,6 @@ public class PublicPostController {
     /**
      * Patch Mapping
      **/
-    @PatchMapping("/{postId}") // 나의 게시글 수정
-    public ResponseEntity<BaseResponse> updatePublicPost(@PathVariable("postId") Long myPostId,
-                                                         @RequestBody UpdateMyPostRequestDto request) {
-        postValidator.validPostId(myPostId);
-        postValidator.validPostTitle(request.getTitle());
-        BaseResponse response = publicPostService.updateMyPost(myPostId, request);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
     @PatchMapping("/{postId}/comment/{commentId}") // 댓글 수정
     public ResponseEntity<BaseResponse> updateComment(@PathVariable("postId") Long postId,
                                                       @PathVariable("commentId") Long commentId,
@@ -102,6 +97,15 @@ public class PublicPostController {
         postValidator.validCommentId(commentId);
         postValidator.validComment(request.getContent());
         BaseResponse response = publicPostService.updateCommentById(postId, commentId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PatchMapping("/{postId}") // 나의 게시글 수정
+    public ResponseEntity<BaseResponse> updatePublicPost(@PathVariable("postId") Long myPostId,
+                                                         @RequestBody UpdateMyPostRequestDto request) {
+        postValidator.validPostId(myPostId);
+        postValidator.validPostTitle(request.getTitle());
+        BaseResponse response = publicPostService.updateMyPost(myPostId, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

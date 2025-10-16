@@ -51,8 +51,8 @@ public class PublicUserService {
         String email = req.getEmail();
         String nickname = req.getNickname();
 
-        if (checkEmailAvailability(email)) throw new EmailAlreadyRegisteredException();
-        if (checkNicknameAvailability(nickname)) throw new NicknameAlreadyRegisteredException();
+        if (!checkEmailAvailability(email)) throw new EmailAlreadyRegisteredException();
+        if (!checkNicknameAvailability(nickname)) throw new NicknameAlreadyRegisteredException();
 
         User toSave = new User(email, req.getPassword(), req.getNickname(), req.getProfileImage());
         User saved = userRepository.regist(toSave).orElseThrow(() -> new UserCreateException());
@@ -92,7 +92,7 @@ public class PublicUserService {
     // 닉네임 중복 검사
     public BaseResponse<CheckNicknameAvailabilityResponseDto> doubleCheckNickname(CheckNicknameAvailabilityRequestDto req) {
         String nickname = req.getNickname();
-        if (checkNicknameAvailability(nickname)) {
+        if (!checkNicknameAvailability(nickname)) {
             return new BaseResponse(ResponseMessage.NICKNAME_IS_NOT_AVAILABLE,
                     new CheckNicknameAvailabilityResponseDto(nickname, false));
         }
@@ -103,7 +103,7 @@ public class PublicUserService {
     // 이메일 중복 검사
     public BaseResponse<CheckEmailAvailabilityResponseDto> doubleCheckEmail(CheckEmailAvailabilityRequestDto req) {
         String email = req.getEmail();
-        if (checkEmailAvailability(email)) {
+        if (!checkEmailAvailability(email)) {
             return new BaseResponse(ResponseMessage.EMAIL_IS_NOT_AVAILABLE,
                     new CheckEmailAvailabilityResponseDto(email, false));
         }
@@ -116,7 +116,7 @@ public class PublicUserService {
     public BaseResponse<UpdateNicknameResponseDto> editNickname(long userId, NicknameEditRequestDto req) {
         String nickname = req.getNickname();
 
-        if (checkNicknameAvailability(nickname)) throw new NicknameAlreadyRegisteredException();
+        if (!checkNicknameAvailability(nickname)) throw new NicknameAlreadyRegisteredException();
 
         User toUpdate = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
         toUpdate.updateNickname(nickname);
@@ -149,14 +149,14 @@ public class PublicUserService {
         List<User> users = userRepository.findAll();
         for (User user : users) {
             if (user.getNickname().equals(nickname)) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     // 이메일 중복 검사
     private boolean checkEmailAvailability(String email) {
-        return emailRepository.findByEmail(email).isPresent();
+        return !emailRepository.findByEmail(email).isPresent();
     }
 }
