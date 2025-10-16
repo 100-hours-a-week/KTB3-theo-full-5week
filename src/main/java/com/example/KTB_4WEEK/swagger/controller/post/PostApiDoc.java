@@ -54,8 +54,7 @@ public interface PostApiDoc {
                                             "createdAt": "2025-10-12 20:52:12",
                                             "updatedAt": "2025-10-12 20:52:12",
                                             "deleted": false
-                                        },
-                                            ........
+                                        }
                                     ],
                                     "pageIndex": 1
                                 },
