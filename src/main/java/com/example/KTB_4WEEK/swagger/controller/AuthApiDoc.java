@@ -1,4 +1,4 @@
-package com.example.KTB_4WEEK.docs.controller;
+package com.example.KTB_4WEEK.swagger.controller;
 
 import com.example.KTB_4WEEK.dto.request.user.LoginRequestDto;
 import com.example.KTB_4WEEK.dto.response.common.BaseResponse;

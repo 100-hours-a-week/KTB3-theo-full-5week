@@ -2,6 +2,7 @@ package com.example.KTB_4WEEK.entity;
 
 
 import java.time.LocalDateTime;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Post {
     // id ~ category : User가 조회 수정 가능
@@ -13,8 +14,8 @@ public class Post {
     private PostCategory category = PostCategory.NONE;
 
     // User Invisible data, 서버 내부적으로 값 설정
-    private int hit = 0;
-    private int like = 0;
+    private AtomicLong hit = new AtomicLong(0);
+    private AtomicLong like = new AtomicLong(0);
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = this.createdAt;
     private boolean isDeleted = false;
@@ -53,12 +54,12 @@ public class Post {
         return category;
     }
 
-    public int getHit() {
-        return hit;
+    public long getHit() {
+        return hit.get();
     }
 
-    public int getLike() {
-        return like;
+    public long getLike() {
+        return like.get();
     }
 
     public String getArticleImage() {
@@ -78,8 +79,9 @@ public class Post {
     }
 
     public void identify(long id) {
-        identify(id);
+        this.id = id;
     }
+
     public void updateTitle(String title) {
         this.title = title;
     }
@@ -121,11 +123,11 @@ public class Post {
                 '}';
     }
 
-    public int increaseHit() {
-        return ++this.hit;
+    public long increaseHit() {
+        return hit.getAndIncrement();
     }
 
-    public int increaseLike() {
-        return ++this.like;
+    public long increaseLike() {
+        return like.getAndIncrement();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.KTB_4WEEK.docs.controller.post;
+package com.example.KTB_4WEEK.swagger.controller.post;
 
 import com.example.KTB_4WEEK.dto.request.post.CreatePostRequestDto;
 import com.example.KTB_4WEEK.dto.request.post.UpdateMyPostRequestDto;

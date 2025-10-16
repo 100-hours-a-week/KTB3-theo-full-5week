@@ -1,16 +1,11 @@
 package com.example.KTB_4WEEK.controller.auth;
 
-import com.example.KTB_4WEEK.docs.controller.AuthApiDoc;
+import com.example.KTB_4WEEK.swagger.controller.AuthApiDoc;
 import com.example.KTB_4WEEK.dto.request.user.LoginRequestDto;
 import com.example.KTB_4WEEK.dto.response.common.BaseResponse;
 import com.example.KTB_4WEEK.dto.response.user.LoginResponseDto;
 import com.example.KTB_4WEEK.service.auth.TokenService;
 import com.example.KTB_4WEEK.service.user.PublicUserService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

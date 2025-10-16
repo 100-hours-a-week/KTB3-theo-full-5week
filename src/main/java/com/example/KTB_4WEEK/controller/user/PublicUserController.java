@@ -1,15 +1,10 @@
 package com.example.KTB_4WEEK.controller.user;
 
-import com.example.KTB_4WEEK.docs.controller.user.UserApiDoc;
+import com.example.KTB_4WEEK.swagger.controller.user.UserApiDoc;
 import com.example.KTB_4WEEK.dto.request.user.*;
 import com.example.KTB_4WEEK.dto.response.common.BaseResponse;
 import com.example.KTB_4WEEK.service.user.PublicUserService;
 import com.example.KTB_4WEEK.util.validator.UserValidator;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

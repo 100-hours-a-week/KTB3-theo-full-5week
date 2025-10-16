@@ -10,11 +10,11 @@ public class IncreaseHitResponseDto {
     @Schema(description = "조회 수 증가된 게시물 PK", example = "1")
     private long id;
     @Schema(description = "게시물의 총 조회 수", example = "20")
-    private int hit;
+    private long hit;
     @Schema(description = "게시물의 최근 업데이트 시간", example = "2025-10-10 20:00:00")
     private String updateAt;
 
-    public IncreaseHitResponseDto(long id, int hit, LocalDateTime updateAt) {
+    public IncreaseHitResponseDto(long id, long hit, LocalDateTime updateAt) {
         this.id = id;
         this.hit = hit;
         this.updateAt = updateAt.format(DateTimeFormatter
@@ -25,7 +25,7 @@ public class IncreaseHitResponseDto {
         return id;
     }
 
-    public int getHit() {
+    public long getHit() {
         return hit;
     }
 

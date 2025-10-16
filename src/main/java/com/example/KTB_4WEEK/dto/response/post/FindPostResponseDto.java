@@ -21,8 +21,8 @@ public class FindPostResponseDto {
     @Schema(description = "게시글 카테고리(소통방, 고민상담, 정보공유)", example = "COMMUNITY, COUNSELING, INFO_SHARE")
     private PostCategory category = PostCategory.NONE;
 
-    private int hit = 0;
-    private int like = 0;
+    private long hit = 0;
+    private long like = 0;
     private String createdAt = "";
     private String updatedAt = "";
     private boolean isDeleted = false;
@@ -32,7 +32,7 @@ public class FindPostResponseDto {
 
     public FindPostResponseDto(long id, long authorId, String title,
                                String article, String articleImage, PostCategory category,
-                               int hit, int like, LocalDateTime createdAt,
+                               long hit, long like, LocalDateTime createdAt,
                                LocalDateTime updatedAt, boolean isDeleted) {
         this.id = id;
         this.authorId = authorId;
@@ -73,11 +73,11 @@ public class FindPostResponseDto {
         return category;
     }
 
-    public int getHit() {
+    public long getHit() {
         return hit;
     }
 
-    public int getLike() {
+    public long getLike() {
         return like;
     }
 

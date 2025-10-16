@@ -1,6 +1,6 @@
 package com.example.KTB_4WEEK.controller.post;
 
-import com.example.KTB_4WEEK.docs.controller.post.PostApiDoc;
+import com.example.KTB_4WEEK.swagger.controller.post.PostApiDoc;
 import com.example.KTB_4WEEK.dto.request.post.CreatePostRequestDto;
 import com.example.KTB_4WEEK.dto.request.post.comment.UpdateCommentRequestDto;
 import com.example.KTB_4WEEK.dto.response.common.BaseResponse;
@@ -9,7 +9,6 @@ import com.example.KTB_4WEEK.dto.request.post.UpdateMyPostRequestDto;
 import com.example.KTB_4WEEK.dto.request.post.comment.CreateCommentRequestDto;
 
 import com.example.KTB_4WEEK.util.validator.PostValidator;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
