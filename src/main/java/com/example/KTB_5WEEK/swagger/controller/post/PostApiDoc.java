@@ -41,19 +41,6 @@ public interface PostApiDoc {
                                             "createdAt": "2025-10-12 20:50:18",
                                             "updatedAt": "2025-10-12 20:50:18",
                                             "deleted": false
-                                        },
-                                        {
-                                            "id": 3,
-                                            "authorId": 0,
-                                            "title": "제목",
-                                            "article": "본문 내용",
-                                            "articleImage": null,
-                                            "category": "COMMUNITY",
-                                            "hit": 0,
-                                            "like": 0,
-                                            "createdAt": "2025-10-12 20:52:12",
-                                            "updatedAt": "2025-10-12 20:52:12",
-                                            "deleted": false
                                         }
                                     ],
                                     "pageIndex": 1

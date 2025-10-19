@@ -1,6 +1,7 @@
 package com.example.KTB_5WEEK.service.user;
 
 
+import com.example.KTB_5WEEK.aop.pointcut.Loggable;
 import com.example.KTB_5WEEK.dto.request.user.*;
 import com.example.KTB_5WEEK.dto.response.common.BaseResponse;
 import com.example.KTB_5WEEK.dto.response.common.ResponseMessage;
@@ -28,6 +29,7 @@ public class PublicUserService {
      * User Service Business Logic & Convert <BaseResponse> Method
      **/
     // 로그인
+    @Loggable
     public BaseResponse<LoginResponseDto> login(LoginRequestDto req) {
         String email = req.getEmail();
         String password = req.getPassword();
@@ -42,11 +44,13 @@ public class PublicUserService {
     }
 
     // 로그아웃
+    @Loggable
     public BaseResponse logout() {
         return new BaseResponse(ResponseMessage.LOGOUT_SUCCESS, new User());
     }
 
     // 회원가입
+    @Loggable
     public BaseResponse<RegistUserResponseDto> register(RegistUserRequestDto req) {
         String email = req.getEmail();
         String nickname = req.getNickname();
@@ -68,6 +72,7 @@ public class PublicUserService {
     }
 
     // 회원정보 조회
+    @Loggable
     public BaseResponse<FindUserResponseDto> findById(long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
         return new BaseResponse(ResponseMessage.USERINFO_LOAD_SUCCESS,
@@ -76,6 +81,7 @@ public class PublicUserService {
     }
 
     // 회원정보 삭제
+    @Loggable
     public BaseResponse deleteById(long id) {
         User toDelete = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
 
@@ -90,6 +96,7 @@ public class PublicUserService {
     }
 
     // 닉네임 중복 검사
+    @Loggable
     public BaseResponse<CheckNicknameAvailabilityResponseDto> doubleCheckNickname(CheckNicknameAvailabilityRequestDto req) {
         String nickname = req.getNickname();
         if (!checkNicknameAvailability(nickname)) {
@@ -101,6 +108,7 @@ public class PublicUserService {
     }
 
     // 이메일 중복 검사
+    @Loggable
     public BaseResponse<CheckEmailAvailabilityResponseDto> doubleCheckEmail(CheckEmailAvailabilityRequestDto req) {
         String email = req.getEmail();
         if (!checkEmailAvailability(email)) {
@@ -113,6 +121,7 @@ public class PublicUserService {
 
 
     // 닉네임 수정
+    @Loggable
     public BaseResponse<UpdateNicknameResponseDto> editNickname(long userId, NicknameEditRequestDto req) {
         String nickname = req.getNickname();
 
@@ -128,6 +137,7 @@ public class PublicUserService {
     }
 
     // 비밀번호 변경
+    @Loggable
     public BaseResponse changePassword(long userId, PasswordChangeRequestDto req) {
         String password = req.getPassword();
 
