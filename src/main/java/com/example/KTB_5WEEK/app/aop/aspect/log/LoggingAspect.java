@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoggingAspect {
 
-    @Pointcut("execution(* com.example.KTB_5WEEK.service..*(..))")
+    @Pointcut("execution(* com.example.KTB_5WEEK..service..*(..))")
     private void serviceLayer() {
     }
 
-    @Pointcut("@annotation(com.example.KTB_5WEEK.aop.pointcut.Loggable)")
+    @Pointcut("@annotation(com.example.KTB_5WEEK.app.aop.aspect.log.Loggable)")
     private void loggableMethods() {
     }
 

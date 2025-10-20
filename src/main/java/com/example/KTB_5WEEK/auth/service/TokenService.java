@@ -1,16 +1,14 @@
 package com.example.KTB_5WEEK.auth.service;
 
 import com.example.KTB_5WEEK.app.aop.aspect.log.Loggable;
+import com.example.KTB_5WEEK.auth.service.decoder.Decoder;
+import com.example.KTB_5WEEK.auth.service.encoder.Encoder;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.Base64;
 import java.util.Map;
 import java.util.Optional;
 
@@ -19,9 +17,17 @@ public class TokenService {
     @Value("${application.auth.secret}")
     private String secret_key;
 
-    private static final Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
-    private static final Base64.Decoder decoder = Base64.getUrlDecoder();
+    private Encoder encoder;
+    private Decoder decoder;
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private EncryptService encryptService;
+
+
+    public TokenService(Encoder encoder, Decoder decoder, EncryptService encryptService) {
+        this.encoder = encoder;
+        this.decoder = decoder;
+        this.encryptService = encryptService;
+    }
 
     // 토큰 발급
     @Loggable
@@ -29,20 +35,20 @@ public class TokenService {
         long now = System.currentTimeMillis();
         long exp = now + ttl.toMillis();
         Map<String, Object> header = Map.of(
-                "alg", "HS256",
+                "alg", encryptService.getEncryptAlgorithm(),
                 "typ", "JWT"
         );
 
         Map<String, Object> payload = Map.of(
-                "iss", "KTB-4WEEK", // 발급자
+                "iss", "KTB-5WEEK", // 발급자
                 "sub", userId, // 제목
                 "exp", exp, // 만료 시간
                 "iat", now // 발급 시간
         );
 
-        String headerBase64 = base64UrlEncode(header);
-        String payloadBase64 = base64UrlEncode(payload);
-        String signature = encryptByHmacSHA256(headerBase64 + "." + payloadBase64);
+        String headerBase64 = encoder.encodeJson(header);
+        String payloadBase64 = encoder.encodeJson(payload);
+        String signature = encryptService.encryptPayload(headerBase64 + "." + payloadBase64, secret_key);
         String token = headerBase64 + "." + payloadBase64 + "." + signature;
 
         return token;
@@ -54,52 +60,28 @@ public class TokenService {
         String[] parts = token.split("\\.");
         if (parts.length != 3) return Optional.ofNullable(null);
 
-        Map<String, Object> header = base64UrlDecode(parts[0]);
-        Map<String, Object> payload = base64UrlDecode(parts[1]);
-
-        if (!header.get("alg").equals("HS256") || !header.get("typ").equals("JWT")) {
-            return Optional.ofNullable(null);
-        }
-
-        if (!parts[2].equals(encryptByHmacSHA256(parts[0] + "." + parts[1]))) {
-            return Optional.ofNullable(null);
-        }
-
-        long now = System.currentTimeMillis();
-        long exp = ((Number) payload.get("exp")).longValue();
-        if (exp < now) return Optional.ofNullable(null);
-
-        long userId = ((Number) payload.get("sub")).longValue(); // userId
-        return Optional.ofNullable(userId);
-    }
-
-    // Object -> byte[] -> Base64 Encode
-    private String base64UrlEncode(Map<String, Object> toByte) {
         try {
-            byte[] json = objectMapper.writeValueAsBytes(toByte);
-            return encoder.encodeToString(json);
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }
-    }
+            Map<String, Object> header = objectMapper.readValue(decoder.decode(parts[0]),
+                    new TypeReference<Map<String, Object>>() {
+                    });
+            Map<String, Object> payload = objectMapper.readValue(decoder.decode(parts[1]),
+                    new TypeReference<Map<String, Object>>() {
+                    });
 
-    // Base64 Decode -> byte[] -> Object
-    private Map<String, Object> base64UrlDecode(String encrypted) {
-        try {
-            byte[] json = decoder.decode(encrypted);
-            return objectMapper.readValue(json, new TypeReference<Map<String, Object>>() {
-            });
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }
-    }
+            if (!header.get("alg").equals(encryptService.getEncryptAlgorithm()) || !header.get("typ").equals("JWT")) {
+                return Optional.ofNullable(null);
+            }
 
-    // Encrypt By Hmac SHA256
-    private String encryptByHmacSHA256(String target) {
-        try {
-            Mac mac = Mac.getInstance("HmacSHA256");
-            mac.init(new SecretKeySpec(secret_key.getBytes(StandardCharsets.UTF_8), "HmacSHA256"));
-            return encoder.encodeToString(mac.doFinal(target.getBytes(StandardCharsets.UTF_8)));
+            if (!parts[2].equals(encryptService.encryptPayload(parts[0] + "." + parts[1], secret_key))) {
+                return Optional.ofNullable(null);
+            }
+
+            long now = System.currentTimeMillis();
+            long exp = ((Number) payload.get("exp")).longValue();
+            if (exp < now) return Optional.ofNullable(null);
+
+            long userId = ((Number) payload.get("sub")).longValue(); // userId
+            return Optional.ofNullable(userId);
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
