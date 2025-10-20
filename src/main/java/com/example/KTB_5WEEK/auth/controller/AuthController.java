@@ -1,5 +1,6 @@
 package com.example.KTB_5WEEK.auth.controller;
 
+import com.example.KTB_5WEEK.auth.service.AuthService;
 import com.example.KTB_5WEEK.swagger.controller.AuthApiDoc;
 import com.example.KTB_5WEEK.user.dto.request.LoginRequestDto;
 import com.example.KTB_5WEEK.app.response.BaseResponse;
@@ -19,18 +20,18 @@ import java.time.Duration;
 @RestController
 @RequestMapping("/auth")
 public class AuthController implements AuthApiDoc {
-    private final PublicUserService publicUserService;
+    private final AuthService authService;
     private final TokenService tokenService;
     private final int tokenExpireMin = 10;
 
-    public AuthController(PublicUserService publicUserService, TokenService tokenService) {
-        this.publicUserService = publicUserService;
+    public AuthController(AuthService authService, TokenService tokenService) {
+        this.authService = authService;
         this.tokenService = tokenService;
     }
 
     @PostMapping("/access/token") // 로그인
     public ResponseEntity<BaseResponse> login(@RequestBody LoginRequestDto request) {
-        BaseResponse response = publicUserService.login(request);
+        BaseResponse response = authService.login(request);
         String token = tokenService.issue(((LoginResponseDto) response.getData()).getId(),
                 Duration.ofMinutes(tokenExpireMin));
 
@@ -41,7 +42,7 @@ public class AuthController implements AuthApiDoc {
 
     @PostMapping("/logout") // 로그아웃
     public ResponseEntity<BaseResponse> logout(HttpServletRequest request) {
-        BaseResponse response = publicUserService.logout();
+        BaseResponse response = authService.logout();
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 

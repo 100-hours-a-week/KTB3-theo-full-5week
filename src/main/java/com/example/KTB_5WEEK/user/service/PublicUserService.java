@@ -28,26 +28,6 @@ public class PublicUserService {
     /**
      * User Service Business Logic & Convert <BaseResponse> Method
      **/
-    // 로그인
-    @Loggable
-    public BaseResponse<LoginResponseDto> login(LoginRequestDto req) {
-        String email = req.getEmail();
-        String password = req.getPassword();
-
-        List<User> users = userRepository.findAll();
-        for (User user : users) {
-            if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
-                return new BaseResponse(ResponseMessage.LOGIN_SUCCESS, new LoginResponseDto(user.getId(), true));
-            }
-        }
-        throw new UserNotFoundException();
-    }
-
-    // 로그아웃
-    @Loggable
-    public BaseResponse logout() {
-        return new BaseResponse(ResponseMessage.LOGOUT_SUCCESS, new User());
-    }
 
     // 회원가입
     @Loggable
