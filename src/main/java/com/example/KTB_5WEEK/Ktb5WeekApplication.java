@@ -1,6 +1,5 @@
 package com.example.KTB_5WEEK;
 
-import com.example.KTB_5WEEK.aop.pointcut.Loggable;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

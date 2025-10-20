@@ -1,10 +1,10 @@
 package com.example.KTB_5WEEK.swagger.controller.post;
 
-import com.example.KTB_5WEEK.dto.request.post.CreatePostRequestDto;
-import com.example.KTB_5WEEK.dto.request.post.UpdateMyPostRequestDto;
-import com.example.KTB_5WEEK.dto.request.post.comment.CreateCommentRequestDto;
-import com.example.KTB_5WEEK.dto.request.post.comment.UpdateCommentRequestDto;
-import com.example.KTB_5WEEK.dto.response.common.BaseResponse;
+import com.example.KTB_5WEEK.post.dto.request.CreatePostRequestDto;
+import com.example.KTB_5WEEK.post.dto.request.UpdateMyPostRequestDto;
+import com.example.KTB_5WEEK.post.dto.request.comment.CreateCommentRequestDto;
+import com.example.KTB_5WEEK.post.dto.request.comment.UpdateCommentRequestDto;
+import com.example.KTB_5WEEK.app.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;

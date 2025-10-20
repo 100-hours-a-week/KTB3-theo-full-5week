@@ -1,14 +1,13 @@
 package com.example.KTB_5WEEK.swagger.controller.user;
 
-import com.example.KTB_5WEEK.dto.request.user.*;
-import com.example.KTB_5WEEK.dto.response.common.BaseResponse;
+import com.example.KTB_5WEEK.app.response.BaseResponse;
+import com.example.KTB_5WEEK.user.dto.request.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -121,17 +120,6 @@ public interface UserApiDoc {
             })),
     })
     public ResponseEntity<BaseResponse> createPublicUser(@RequestBody RegistUserRequestDto request);
-
-    @Operation(summary = "로그아웃", description = "회원의 접속상태를 로그아웃으로 변경합니다.")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "로그아웃 성공"
-                    , content = @Content(mediaType = "application/json", examples = {
-                    @ExampleObject(name = "로그아웃 성공", value = """
-                            {}
-                            """)
-            })),
-    })
-    public ResponseEntity<BaseResponse> logout(HttpServletRequest request);
 
     @Operation(summary = "닉네임 중복 확인", description = "사용중인 닉네임인지 확인합니다.")
     @ApiResponses({
