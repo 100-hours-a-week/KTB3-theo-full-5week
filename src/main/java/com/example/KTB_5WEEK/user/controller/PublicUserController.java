@@ -21,7 +21,6 @@ public class PublicUserController implements UserApiDoc {
         this.publicUserService = publicUserService;
         this.userValidator = userValidator;
     }
-
     /**
      * Get Mapping
      **/

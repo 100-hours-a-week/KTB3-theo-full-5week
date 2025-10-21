@@ -14,6 +14,7 @@ public class UserValidator extends Validator{
      * @ validEmail(String email)
      * @ validNickname(String nickname)
      * **/
+
     // 비밀번호 검증
     public void validPassword(String password) {
         matchesPasswordPattern(password);

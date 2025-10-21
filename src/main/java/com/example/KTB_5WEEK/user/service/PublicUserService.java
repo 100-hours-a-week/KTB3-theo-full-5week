@@ -28,7 +28,6 @@ public class PublicUserService {
     /**
      * User Service Business Logic & Convert <BaseResponse> Method
      **/
-
     // 회원가입
     @Loggable
     public BaseResponse<RegistUserResponseDto> register(RegistUserRequestDto req) {
@@ -133,7 +132,6 @@ public class PublicUserService {
     /**
      * User Service Common Function
      **/
-
     // 닉네임 중복 검사
     private boolean checkNicknameAvailability(String nickname) {
         List<User> users = userRepository.findAll();
