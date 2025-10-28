@@ -7,6 +7,7 @@ import com.example.KTB_5WEEK.app.response.BaseResponse;
 import com.example.KTB_5WEEK.auth.dto.response.LoginResponseDto;
 import com.example.KTB_5WEEK.auth.service.TokenService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import java.time.Duration;
 public class AuthController implements AuthApiDoc {
     private final AuthService authService;
     private final TokenService tokenService;
+    @Value("${application.auth.token.expire}")
     private final int tokenExpireMin = 10;
 
     public AuthController(AuthService authService, TokenService tokenService) {
@@ -31,8 +33,7 @@ public class AuthController implements AuthApiDoc {
     @PostMapping("/access/token") // 로그인
     public ResponseEntity<BaseResponse> login(@RequestBody LoginRequestDto request) {
         BaseResponse response = authService.login(request);
-        String token = tokenService.issue(((LoginResponseDto) response.getData()).getId(),
-                Duration.ofMinutes(tokenExpireMin));
+        String token = tokenService.issue(Duration.ofMinutes(tokenExpireMin));
 
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Authorization", "Bearer" + token)

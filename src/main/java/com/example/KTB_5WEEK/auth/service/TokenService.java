@@ -32,7 +32,7 @@ public class TokenService {
 
     // 토큰 발급
     @Loggable
-    public String issue(long userId, Duration ttl) {
+    public String issue(Duration ttl) {
         long now = System.currentTimeMillis();
         long exp = now + ttl.toMillis();
         Map<String, Object> header = Map.of(
@@ -42,7 +42,7 @@ public class TokenService {
 
         Map<String, Object> payload = Map.of(
                 "iss", "KTB-5WEEK", // 발급자
-                "sub", userId, // 제목
+                "sub", "token", // 제목
                 "exp", exp, // 만료 시간
                 "iat", now // 발급 시간
         );

@@ -43,9 +43,15 @@ public class PublicPostService {
     // 게시글 생성
     @Loggable
     public BaseResponse<CreateCommentResponseDto> createPost(CreatePostRequestDto req) {
-        Post toSave = new Post(req.getAuthorId(), req.getTitle(), req.getArticle(), req.getArticleImage(), req.getCategory());
+        Post toSave = new Post.Builder()
+                .authorId(req.getAuthorId())
+                .title(req.getTitle())
+                .article(req.getArticle())
+                .articleImage(req.getArticleImage())
+                .category(req.getCategory())
+                .build();
         Post saved = postRepository.createPost(toSave).orElseThrow(() -> new PostCreateException());
-        return new BaseResponse(ResponseMessage.POST_REGISTER_SUCCESS, new CreatePostResponseDto(saved.getId()));
+        return new BaseResponse(ResponseMessage.POST_REGISTER_SUCCESS, CreatePostResponseDto.toDto(saved.getId()));
     }
 
     // 게시글 목록 조회
@@ -66,20 +72,18 @@ public class PublicPostService {
                 .sorted(PostPaginationPolicy.DEFAULT.comparator())
                 .skip(PostPaginationPolicy.DEFAULT.offset(page))
                 .limit(PostPaginationPolicy.DEFAULT.limit())
-                .map(this::toFindPostResponseDto)
+                .map((post) -> FindPostResponseDto.toDto(post))
                 .collect(Collectors.toCollection(ArrayList::new));
 
         return new BaseResponse(ResponseMessage.POSTS_LOAD_SUCCESS,
-                new FindPostsResponseDto(totalPages, totalCount, postPerPage, currentPage, hasNext,
-                        postDtoList));
+                FindPostsResponseDto.toDto(totalPages, totalCount, postPerPage, currentPage, hasNext, postDtoList));
     }
 
     // 게시글 조회
     @Loggable
     public BaseResponse<FindPostResponseDto> findPostById(long id) {
         Post post = postRepository.findPostById(id).orElseThrow(() -> new PostNotFoundException());
-        FindPostResponseDto findPostResponseDto = toFindPostResponseDto(post);
-        return new BaseResponse(ResponseMessage.POST_INFO_LOAD_SUCCESS, findPostResponseDto);
+        return new BaseResponse(ResponseMessage.POST_INFO_LOAD_SUCCESS, FindPostResponseDto.toDto(post));
     }
 
     // My Post 수정
@@ -96,8 +100,7 @@ public class PublicPostService {
         Post updatedPost = postRepository.updatePostById(myPostId, originPost).orElseThrow(() -> new PostUpdateException());
 
         return new BaseResponse(ResponseMessage.MY_POST_UPDATE_SUCCESS,
-                new UpdateMyPostResponseDto(updatedPost.getId(), updatedPost.getTitle()
-                        , updatedPost.getArticle(), updatedPost.getArticleImage(), updatedPost.getCategory(), updatedPost.getUpdatedAt()));
+                UpdateMyPostResponseDto.toDto(updatedPost));
     }
 
     // 게시글 삭제 By Id
@@ -118,7 +121,7 @@ public class PublicPostService {
 
         Post updated = postRepository.updatePostById(id, toUpdate).orElseThrow(() -> new IncreaseHitFailException());
         return new BaseResponse(ResponseMessage.INCREASE_HIT_SUCCESS,
-                new IncreaseHitResponseDto(updated.getId(), updated.getHit(), updated.getUpdatedAt()));
+                IncreaseHitResponseDto.toDto(updated));
     }
 
     // 게시글 좋아요 수 증가
@@ -129,7 +132,7 @@ public class PublicPostService {
 
         Post updated = postRepository.updatePostById(id, toUpdate).orElseThrow(() -> new IncreaseLikeFailException());
         return new BaseResponse(ResponseMessage.INCREASE_LIKE_SUCCESS,
-                new IncreaseLikeResponseDto(updated.getId(), updated.getHit(), updated.getUpdatedAt()));
+                IncreaseLikeResponseDto.toDto(updated));
     }
 
     // 댓글 등록
@@ -141,7 +144,7 @@ public class PublicPostService {
         Comment saved = postRepository.createComment(toSave).orElseThrow(() -> new CommentCreateException());
 
         return new BaseResponse(ResponseMessage.COMMENT_CREATE_SUCCESS,
-                new CreateCommentResponseDto(saved.getId(), saved.getContent()));
+                CreateCommentResponseDto.toDto(saved));
     }
 
     // 댓글 조회 By Post Id
@@ -163,11 +166,11 @@ public class PublicPostService {
                 .sorted(CommentPaginationPolicy.DEFAULT.comparator())
                 .skip(CommentPaginationPolicy.DEFAULT.offset(page))
                 .limit(CommentPaginationPolicy.DEFAULT.limit())
-                .map(this::toFindCommentResponseDto)
+                .map((c) -> FindCommentResponseDto.toDto(c))
                 .collect(Collectors.toCollection(ArrayList::new));
 
         return new BaseResponse(ResponseMessage.COMMENTS_LOAD_SUCCESS,
-                new FindCommentsResponseDto(postId, totalPages, totalCount, commentPerPage, currentPage, hasNext,
+                FindCommentsResponseDto.toDto(postId, totalPages, totalCount, commentPerPage, currentPage, hasNext,
                         commentDtoList));
     }
 
@@ -176,9 +179,7 @@ public class PublicPostService {
     public BaseResponse<FindCommentResponseDto> findCommentByCommentId(long id) {
         Comment comment = postRepository.findCommentById(id).orElseThrow(() -> new CommentNotFoundException());
 
-        return new BaseResponse(ResponseMessage.COMMENT_LOAD_SUCCESS,
-                new FindCommentResponseDto(comment.getId(), comment.getUserId(), comment.getContent()
-                        , comment.getCreatedAt(), comment.getUpdatedAt()));
+        return new BaseResponse(ResponseMessage.COMMENT_LOAD_SUCCESS, FindCommentResponseDto.toDto(comment));
     }
 
     // 댓글 수정 By Comment Id
@@ -193,8 +194,7 @@ public class PublicPostService {
         Comment updatedComment = postRepository.updateCommentById(commentId, originComment).orElseThrow(() -> new CommentUpdateException());
 
         return new BaseResponse(ResponseMessage.COMMENT_UPDATE_SUCCESS,
-                new UpdateCommentResponseDto(updatedComment.getId(), updatedComment.getPostId(), updatedComment.getUserId(),
-                        updatedComment.getContent(), updatedComment.getCreatedAt(), updatedComment.getUpdatedAt()));
+                UpdateCommentResponseDto.toDto(updatedComment));
     }
 
     // 댓글 삭제
@@ -207,22 +207,4 @@ public class PublicPostService {
         return new BaseResponse(ResponseMessage.COMMENT_DELETE_SUCCESS, new Comment());
     }
 
-    /**
-     * Entity -> Response DTO
-     **/
-    // 게시글 조회 : Post -> ResponseDTO
-    @Loggable
-    private FindPostResponseDto toFindPostResponseDto(Post post) {
-        return new FindPostResponseDto(post.getId(), post.getAuthorId(), post.getTitle(),
-                post.getArticle(), post.getArticleImage(), post.getCategory(),
-                post.getHit(), post.getLike(), post.getCreatedAt(), post.getUpdatedAt(),
-                post.isDeleted());
-    }
-
-    // 댓글 조회 By Comment ID -> Response DTO
-    @Loggable
-    private FindCommentResponseDto toFindCommentResponseDto(Comment comment) {
-        return new FindCommentResponseDto(comment.getId(), comment.getUserId(), comment.getContent()
-                , comment.getCreatedAt(), comment.getUpdatedAt());
-    }
 }

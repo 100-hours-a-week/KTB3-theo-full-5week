@@ -15,17 +15,6 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password,
-                String nickname, String profileImage) {
-        this.email = email;
-        this.password = password;
-        this.nickname = nickname;
-        this.profileImage = profileImage;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = this.createdAt;
-        this.isDeleted = false;
-    }
-
     public User(Builder builder) {
         this.id = builder.id;
         this.email = builder.email;
@@ -86,29 +75,6 @@ public class User {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", profileImage='" + profileImage + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", isDeleted=" + isDeleted +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        User user = (User) o;
-        if ((user.email.equals(this.email)) && user.password.equals(this.password)) {
-            return true;
-        }
-
-        return false;
-    }
     public static class Builder {
         private long id = 0L;
         private String email = "";

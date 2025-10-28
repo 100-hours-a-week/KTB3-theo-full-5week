@@ -23,7 +23,14 @@ public class Post {
     public Post() {
     }
 
-    ;
+    public Post(Builder builder) {
+        this.id = builder.id;
+        this.authorId = builder.authorId;
+        this.title = builder.title;
+        this.article = builder.article;
+        this.articleImage = builder.articleImage;
+        this.category = builder.category;
+    }
 
     public Post(long authorId, String title, String article, String articleImage, PostCategory category) {
         this.authorId = authorId;
@@ -106,28 +113,54 @@ public class Post {
         this.isDeleted = true;
     }
 
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", authorId=" + authorId +
-                ", title='" + title + '\'' +
-                ", article='" + article + '\'' +
-                ", articleImage='" + articleImage + '\'' +
-                ", category=" + category +
-                ", hit=" + hit +
-                ", like=" + like +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", isDeleted=" + isDeleted +
-                '}';
-    }
-
     public long increaseHit() {
         return hit.getAndIncrement();
     }
 
     public long increaseLike() {
         return like.getAndIncrement();
+    }
+
+    public static class Builder {
+        private long id = 0L;
+        private long authorId = 0L;
+        private String title = "";
+        private String article = "";
+        private String articleImage = "";
+        private PostCategory category = PostCategory.NONE;
+
+        public Builder id(long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder authorId(long authorId) {
+            this.authorId = authorId;
+            return this;
+        }
+
+        public Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder article(String article) {
+            this.article = article;
+            return this;
+        }
+
+        public Builder articleImage(String articleImage) {
+            this.articleImage = articleImage;
+            return this;
+        }
+
+        public Builder category(PostCategory category) {
+            this.category = category;
+            return this;
+        }
+
+        public Post build() {
+            return new Post(this);
+        }
     }
 }
