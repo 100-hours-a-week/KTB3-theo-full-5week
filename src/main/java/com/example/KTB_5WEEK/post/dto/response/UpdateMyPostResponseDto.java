@@ -16,6 +16,33 @@ public class UpdateMyPostResponseDto {
     private PostCategory category;
     private String updateAt;
 
+    public UpdateMyPostResponseDto() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getArticle() {
+        return article;
+    }
+
+    public String getArticleImage() {
+        return articleImage;
+    }
+
+    public PostCategory getCategory() {
+        return category;
+    }
+
+    public String getUpdateAt() {
+        return updateAt;
+    }
+
     public static UpdateMyPostResponseDto toDto(Post post) {
         UpdateMyPostResponseDto dto = new UpdateMyPostResponseDto();
         dto.id = post.getId();

@@ -15,6 +15,33 @@ public class UpdateCommentResponseDto {
     private String createAt;
     private String updateAt;
 
+    public UpdateCommentResponseDto() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public long getPostId() {
+        return postId;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getCreateAt() {
+        return createAt;
+    }
+
+    public String getUpdateAt() {
+        return updateAt;
+    }
+
     public static UpdateCommentResponseDto toDto(Comment comment) {
         UpdateCommentResponseDto dto = new UpdateCommentResponseDto();
         dto.id = comment.getId();

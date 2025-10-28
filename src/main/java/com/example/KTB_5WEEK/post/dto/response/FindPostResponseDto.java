@@ -22,6 +22,53 @@ public class FindPostResponseDto {
     private String updatedAt = "";
     private boolean isDeleted = false;
 
+    public FindPostResponseDto() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public long getAuthorId() {
+        return authorId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getArticle() {
+        return article;
+    }
+
+    public String getArticleImage() {
+        return articleImage;
+    }
+
+    public PostCategory getCategory() {
+        return category;
+    }
+
+    public long getHit() {
+        return hit;
+    }
+
+    public long getLike() {
+        return like;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
     public static FindPostResponseDto toDto(Post post) {
         FindPostResponseDto dto = new FindPostResponseDto();
         dto.id = post.getId();

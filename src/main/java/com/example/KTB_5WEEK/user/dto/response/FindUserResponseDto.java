@@ -13,6 +13,33 @@ public class FindUserResponseDto {
     private String created_at;
     private String updated_at;
 
+    public FindUserResponseDto() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
     public static FindUserResponseDto toDto(User user) {
         FindUserResponseDto dto = new FindUserResponseDto();
         dto.id = user.getId();

@@ -13,6 +13,25 @@ public class UpdateNicknameResponseDto {
     private String createdAt;
     private String updatedAt;
 
+    public UpdateNicknameResponseDto() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
     public static UpdateNicknameResponseDto toDto(User user) {
         UpdateNicknameResponseDto dto = new UpdateNicknameResponseDto();
         dto.id = user.getId();

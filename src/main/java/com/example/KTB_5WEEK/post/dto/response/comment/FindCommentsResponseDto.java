@@ -13,6 +13,37 @@ public class FindCommentsResponseDto {
     private boolean hasNext;
     private List<FindCommentResponseDto> comments;
 
+    public FindCommentsResponseDto() {
+    }
+
+    public long getPostId() {
+        return postId;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public int getPageIndex() {
+        return pageIndex;
+    }
+
+    public boolean isHasNext() {
+        return hasNext;
+    }
+
+    public List<FindCommentResponseDto> getComments() {
+        return comments;
+    }
+
     public static FindCommentsResponseDto toDto(long postId, int totalPages, int totalCount,
                                                 int pageSize, int pageIndex, boolean hasNext,
                                                 List<FindCommentResponseDto> comments) {

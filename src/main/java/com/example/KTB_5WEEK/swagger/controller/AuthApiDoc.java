@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @Tag(name = "Auth", description = "인증 API")
 public interface AuthApiDoc {
@@ -53,5 +54,5 @@ public interface AuthApiDoc {
                             """)
             })),
     })
-    public ResponseEntity<BaseResponse> logout(HttpServletRequest request);
+    public ResponseEntity<BaseResponse> logout(HttpServletRequest request, @RequestHeader("Authorization") String authorization);
 }

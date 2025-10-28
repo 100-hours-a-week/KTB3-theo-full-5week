@@ -12,6 +12,21 @@ public class IncreaseLikeResponseDto {
     private long like;
     private String updateAt;
 
+    public IncreaseLikeResponseDto() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public long getLike() {
+        return like;
+    }
+
+    public String getUpdateAt() {
+        return updateAt;
+    }
+
     public static IncreaseLikeResponseDto toDto(Post post) {
         IncreaseLikeResponseDto dto = new IncreaseLikeResponseDto();
         dto.id = post.getId();

@@ -10,6 +10,17 @@ public class UpdatePasswordResponseDto {
     private long id;
     private String updatedAt;
 
+    public UpdatePasswordResponseDto() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
     public static UpdatePasswordResponseDto toDto(long id) {
         UpdatePasswordResponseDto dto = new UpdatePasswordResponseDto();
         dto.id = id;

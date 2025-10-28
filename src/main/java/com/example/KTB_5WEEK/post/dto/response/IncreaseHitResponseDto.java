@@ -13,6 +13,21 @@ public class IncreaseHitResponseDto {
     private long hit;
     private String updateAt;
 
+    public IncreaseHitResponseDto() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public long getHit() {
+        return hit;
+    }
+
+    public String getUpdateAt() {
+        return updateAt;
+    }
+
     public static IncreaseHitResponseDto toDto(Post post) {
         IncreaseHitResponseDto dto = new IncreaseHitResponseDto();
         dto.id = post.getId();

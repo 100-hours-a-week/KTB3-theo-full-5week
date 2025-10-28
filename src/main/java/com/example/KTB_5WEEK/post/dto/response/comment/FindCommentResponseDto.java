@@ -14,6 +14,29 @@ public class FindCommentResponseDto {
     private String created_at;
     private String updated_at;
 
+    public FindCommentResponseDto() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
     public static FindCommentResponseDto toDto(Comment comment) {
         FindCommentResponseDto dto = new FindCommentResponseDto();
         dto.id = comment.getId();

@@ -8,12 +8,10 @@ import com.example.KTB_5WEEK.auth.dto.response.LoginResponseDto;
 import com.example.KTB_5WEEK.auth.service.TokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 
@@ -23,7 +21,7 @@ public class AuthController implements AuthApiDoc {
     private final AuthService authService;
     private final TokenService tokenService;
     @Value("${application.auth.token.expire}")
-    private final int tokenExpireMin = 10;
+    private int tokenExpireMin;
 
     public AuthController(AuthService authService, TokenService tokenService) {
         this.authService = authService;
@@ -41,8 +39,11 @@ public class AuthController implements AuthApiDoc {
     }
 
     @PostMapping("/logout") // 로그아웃
-    public ResponseEntity<BaseResponse> logout(HttpServletRequest request) {
+    public ResponseEntity<BaseResponse> logout(HttpServletRequest request
+            , @RequestHeader("Authorization") String authorization) {
+        tokenService.expire(authorization.substring(7));
         BaseResponse response = authService.logout();
+
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 
