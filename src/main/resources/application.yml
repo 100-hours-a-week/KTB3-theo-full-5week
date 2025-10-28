@@ -1,5 +1,5 @@
 application:
-  name: KTB_4WEEK
+  name: KTB_5WEEK
   auth:
     secret: secretKey
     token:

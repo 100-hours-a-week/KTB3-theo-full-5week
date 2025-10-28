@@ -1,22 +1,15 @@
 package com.example.KTB_5WEEK.user.dto.response;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.example.KTB_5WEEK.user.entity.User;
 
 public class RegistUserResponseDto {
-    @Schema(description = "생성된 유저 PK", example = "1")
-    private long id = 0L;
+    private long id;
 
-    public RegistUserResponseDto(long id) {
-        this.id = id;
+    public static RegistUserResponseDto toDto(User user) {
+        RegistUserResponseDto dto = new RegistUserResponseDto();
+        dto.id = user.getId();
+        return dto;
     }
 
-    @Override
-    public String toString() {
-        return "Id : " + this.id;
-    }
-
-    public long getId() {
-        return id;
-    }
 }

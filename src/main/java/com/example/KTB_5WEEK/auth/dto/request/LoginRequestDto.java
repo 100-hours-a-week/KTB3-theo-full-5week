@@ -1,4 +1,4 @@
-package com.example.KTB_5WEEK.user.dto.request;
+package com.example.KTB_5WEEK.auth.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

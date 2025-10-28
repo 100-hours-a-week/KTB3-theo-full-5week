@@ -19,7 +19,7 @@ public interface UserApiDoc {
             @ApiResponse(responseCode = "200", description = "조회 성공"
                     , content = @Content(mediaType = "application/json", examples = {
                     @ExampleObject(name = "회원정보 조회 성공", value = """
-                            {
+                            { 
                                 "message": "UserInfo Load Success",
                                 "data": {
                                     "id": 1,
@@ -36,7 +36,7 @@ public interface UserApiDoc {
             @ApiResponse(responseCode = "401", description = "로그인 인증이 필요합니다."
                     , content = @Content(mediaType = "application/json", examples = {
                     @ExampleObject(name = "로그인 인증이 필요합니다.", value = """
-                            {
+                            { // 맞는디..? 
                                  "code": 401,
                                  "status": "UNAUTHORIZED",
                                  "message": "로그인 인증이 필요합니다.",

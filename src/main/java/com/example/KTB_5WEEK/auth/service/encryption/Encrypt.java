@@ -4,5 +4,5 @@ public interface Encrypt {
 
     String getAlgorithm();
 
-    String encrypt(String target, String secretKey);
+    byte[] encrypt(String target, String secretKey);
 }

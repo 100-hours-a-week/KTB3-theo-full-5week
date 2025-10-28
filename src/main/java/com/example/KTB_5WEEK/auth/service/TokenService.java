@@ -3,6 +3,7 @@ package com.example.KTB_5WEEK.auth.service;
 import com.example.KTB_5WEEK.app.aop.aspect.log.Loggable;
 import com.example.KTB_5WEEK.auth.service.decoder.Decoder;
 import com.example.KTB_5WEEK.auth.service.encoder.Encoder;
+import com.example.KTB_5WEEK.auth.service.encryption.Encrypt;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,13 +21,13 @@ public class TokenService {
     private Encoder encoder;
     private Decoder decoder;
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private EncryptService encryptService;
+    private Encrypt encryptor;
 
 
-    public TokenService(Encoder encoder, Decoder decoder, EncryptService encryptService) {
+    public TokenService(Encoder encoder, Decoder decoder, Encrypt encryptor) {
         this.encoder = encoder;
         this.decoder = decoder;
-        this.encryptService = encryptService;
+        this.encryptor = encryptor;
     }
 
     // 토큰 발급
@@ -35,7 +36,7 @@ public class TokenService {
         long now = System.currentTimeMillis();
         long exp = now + ttl.toMillis();
         Map<String, Object> header = Map.of(
-                "alg", encryptService.getEncryptAlgorithm(),
+                "alg", encryptor.getAlgorithm(),
                 "typ", "JWT"
         );
 
@@ -48,7 +49,7 @@ public class TokenService {
 
         String headerBase64 = encoder.encodeJson(header);
         String payloadBase64 = encoder.encodeJson(payload);
-        String signature = encryptService.encryptPayload(headerBase64 + "." + payloadBase64, secret_key);
+        String signature = encoder.encodeToString(encryptor.encrypt(headerBase64 + "." + payloadBase64, secret_key));
         String token = headerBase64 + "." + payloadBase64 + "." + signature;
 
         return token;
@@ -68,11 +69,11 @@ public class TokenService {
                     new TypeReference<Map<String, Object>>() {
                     });
 
-            if (!header.get("alg").equals(encryptService.getEncryptAlgorithm()) || !header.get("typ").equals("JWT")) {
+            if (!header.get("alg").equals(encryptor.getAlgorithm()) || !header.get("typ").equals("JWT")) {
                 return Optional.ofNullable(null);
             }
 
-            if (!parts[2].equals(encryptService.encryptPayload(parts[0] + "." + parts[1], secret_key))) {
+            if (!parts[2].equals(encoder.encodeToString(encryptor.encrypt(parts[0] + "." + parts[1], secret_key)))) {
                 return Optional.ofNullable(null);
             }
 

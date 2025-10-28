@@ -1,6 +1,6 @@
 package com.example.KTB_5WEEK.swagger.controller;
 
-import com.example.KTB_5WEEK.user.dto.request.LoginRequestDto;
+import com.example.KTB_5WEEK.auth.dto.request.LoginRequestDto;
 import com.example.KTB_5WEEK.app.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

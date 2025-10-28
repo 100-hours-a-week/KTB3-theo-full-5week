@@ -1,8 +1,8 @@
 package com.example.KTB_5WEEK.app.util.validator;
 
 import com.example.KTB_5WEEK.user.exception.InvalidEmailException;
-import com.example.KTB_5WEEK.user.exception.InvalidPasswordException;
 import com.example.KTB_5WEEK.user.exception.InvalidNicknameLengthException;
+import com.example.KTB_5WEEK.user.exception.InvalidPasswordException;
 import com.example.KTB_5WEEK.user.exception.InvalidUserIdRangeException;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +28,6 @@ public class UserValidator extends Validator{
     // 닉네임 검증
     public void validNickname(String nickname) {
         validateNicknameLength(nickname);
-        validateWhiteSpace(nickname);
     }
 
     // UserId 검증
@@ -72,4 +71,5 @@ public class UserValidator extends Validator{
             throw new InvalidUserIdRangeException();
         }
     }
+
 }

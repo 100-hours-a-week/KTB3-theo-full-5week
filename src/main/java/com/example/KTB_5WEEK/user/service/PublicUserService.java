@@ -37,41 +37,35 @@ public class PublicUserService {
         if (!checkEmailAvailability(email)) throw new EmailAlreadyRegisteredException();
         if (!checkNicknameAvailability(nickname)) throw new NicknameAlreadyRegisteredException();
 
-        User toSave = new User(email, req.getPassword(), req.getNickname(), req.getProfileImage());
+
+        User toSave = new User.Builder()
+                .email(email)
+                .password(req.getPassword())
+                .nickname(req.getNickname())
+                .profileImage(req.getProfileImage())
+                .build();
+
         User saved = userRepository.regist(toSave).orElseThrow(() -> new UserCreateException());
+        emailRepository.mapUserByEmail(saved).orElseThrow(() -> new FailUserEmailMappingException());
+        return new BaseResponse(ResponseMessage.USER_REGISTER_SUCCESS, RegistUserResponseDto.toDto(saved));
 
-        mapUserByEmail(saved);
-        return new BaseResponse(ResponseMessage.USER_REGISTER_SUCCESS, new RegistUserResponseDto(saved.getId()));
-
-    }
-
-    // 이메일 : 유저 매핑 <- Search more Fast
-    private void mapUserByEmail(User user) {
-        emailRepository.mapUserByEmail(user).orElseThrow(() -> new FailUserEmailMappingException());
     }
 
     // 회원정보 조회
     @Loggable
     public BaseResponse<FindUserResponseDto> findById(long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
-        return new BaseResponse(ResponseMessage.USERINFO_LOAD_SUCCESS,
-                new FindUserResponseDto(user.getId(), user.getEmail(), user.getNickname(),
-                        user.getProfileImage(), user.getCreatedAt(), user.getUpdatedAt()));
+        return new BaseResponse(ResponseMessage.USERINFO_LOAD_SUCCESS, FindUserResponseDto.toDto(user));
     }
 
     // 회원정보 삭제
     @Loggable
     public BaseResponse deleteById(long id) {
         User toDelete = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
-
         User deleted = userRepository.deleteById(id).orElseThrow(() -> new UserDeleteException());
+        emailRepository.deleteUserByEmail(deleted.getEmail()).orElseThrow(() -> new UserEmailMappingDeleteException());
 
-        deleteUserEmailMapping(deleted.getEmail());
         return new BaseResponse(ResponseMessage.USER_DELETE_SUCCESS, new User());
-    }
-
-    private void deleteUserEmailMapping(String email) {
-        emailRepository.deleteUserByEmail(email).orElseThrow(() -> new UserEmailMappingDeleteException());
     }
 
     // 닉네임 중복 검사
@@ -80,10 +74,10 @@ public class PublicUserService {
         String nickname = req.getNickname();
         if (!checkNicknameAvailability(nickname)) {
             return new BaseResponse(ResponseMessage.NICKNAME_IS_NOT_AVAILABLE,
-                    new CheckNicknameAvailabilityResponseDto(nickname, false));
+                    CheckNicknameAvailabilityResponseDto.toDto(nickname, false));
         }
         return new BaseResponse(ResponseMessage.NICKNAME_IS_AVAILABLE,
-                new CheckNicknameAvailabilityResponseDto(nickname, true));
+                CheckNicknameAvailabilityResponseDto.toDto(nickname, true));
     }
 
     // 이메일 중복 검사
@@ -92,10 +86,10 @@ public class PublicUserService {
         String email = req.getEmail();
         if (!checkEmailAvailability(email)) {
             return new BaseResponse(ResponseMessage.EMAIL_IS_NOT_AVAILABLE,
-                    new CheckEmailAvailabilityResponseDto(email, false));
+                    CheckEmailAvailabilityResponseDto.toDto(email, false));
         }
         return new BaseResponse(ResponseMessage.EMAIL_IS_AVAILABLE,
-                new CheckEmailAvailabilityResponseDto(email, true));
+                CheckEmailAvailabilityResponseDto.toDto(email, true));
     }
 
 
@@ -111,8 +105,7 @@ public class PublicUserService {
 
         User updated = userRepository.updateById(userId, toUpdate).orElseThrow(() -> new NicknameUpdateException());
 
-        return new BaseResponse(ResponseMessage.NICKNAME_EDIT_SUCCESS, new UpdateNicknameResponseDto(
-                updated.getId(), updated.getNickname(), updated.getCreatedAt()));
+        return new BaseResponse(ResponseMessage.NICKNAME_EDIT_SUCCESS, UpdateNicknameResponseDto.toDto(updated));
     }
 
     // 비밀번호 변경
@@ -125,8 +118,7 @@ public class PublicUserService {
 
         User updated = userRepository.updateById(userId, toUpdate).orElseThrow(() -> new UserUpdateException());
 
-        return new BaseResponse(ResponseMessage.PASSWORD_CHANGE_SUCCESS,
-                new UpdatePasswordResponseDto(updated.getId()));
+        return new BaseResponse(ResponseMessage.PASSWORD_CHANGE_SUCCESS, UpdatePasswordResponseDto.toDto(updated.getId()));
     }
 
     /**

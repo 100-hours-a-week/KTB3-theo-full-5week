@@ -2,11 +2,10 @@ package com.example.KTB_5WEEK.auth.controller;
 
 import com.example.KTB_5WEEK.auth.service.AuthService;
 import com.example.KTB_5WEEK.swagger.controller.AuthApiDoc;
-import com.example.KTB_5WEEK.user.dto.request.LoginRequestDto;
+import com.example.KTB_5WEEK.auth.dto.request.LoginRequestDto;
 import com.example.KTB_5WEEK.app.response.BaseResponse;
-import com.example.KTB_5WEEK.user.dto.response.LoginResponseDto;
+import com.example.KTB_5WEEK.auth.dto.response.LoginResponseDto;
 import com.example.KTB_5WEEK.auth.service.TokenService;
-import com.example.KTB_5WEEK.user.service.PublicUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -18,11 +18,11 @@ public class HmacSHA256 implements Encrypt {
     }
 
     @Override
-    public String encrypt(String target, String secretKey) {
+    public byte[] encrypt(String target, String secretKey) {
         try {
             Mac mac = Mac.getInstance(algorithm);
             mac.init(new SecretKeySpec(secretKey.getBytes(encoding), algorithm));
-            return mac.doFinal(target.getBytes(encoding)).toString();
+            return mac.doFinal(target.getBytes(encoding));
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }

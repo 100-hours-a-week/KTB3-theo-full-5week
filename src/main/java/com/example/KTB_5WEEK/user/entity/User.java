@@ -26,6 +26,14 @@ public class User {
         this.isDeleted = false;
     }
 
+    public User(Builder builder) {
+        this.id = builder.id;
+        this.email = builder.email;
+        this.password = builder.password;
+        this.nickname = builder.nickname;
+        this.profileImage = builder.profileImage;
+    }
+
     public long getId() {
         return id;
     }
@@ -100,5 +108,41 @@ public class User {
         }
 
         return false;
+    }
+    public static class Builder {
+        private long id = 0L;
+        private String email = "";
+        private String password = "";
+        private String nickname = "";
+        private String profileImage = "";
+
+        public Builder id(long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder nickname(String nickname) {
+            this.nickname = nickname;
+            return this;
+        }
+
+        public Builder profileImage(String profileImage) {
+            this.profileImage = profileImage;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
     }
 }
