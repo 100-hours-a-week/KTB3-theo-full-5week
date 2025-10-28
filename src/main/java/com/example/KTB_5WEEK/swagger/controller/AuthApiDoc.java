@@ -54,5 +54,5 @@ public interface AuthApiDoc {
                             """)
             })),
     })
-    public ResponseEntity<BaseResponse> logout(HttpServletRequest request, @RequestHeader("Authorization") String authorization);
+    public ResponseEntity<BaseResponse> logout(HttpServletRequest request);
 }

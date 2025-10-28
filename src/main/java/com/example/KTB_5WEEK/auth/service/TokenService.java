@@ -3,6 +3,7 @@ package com.example.KTB_5WEEK.auth.service;
 import com.example.KTB_5WEEK.app.aop.aspect.log.Loggable;
 import com.example.KTB_5WEEK.auth.exception.AlreadyExpiredToken;
 import com.example.KTB_5WEEK.auth.exception.FailTokenExpireException;
+import com.example.KTB_5WEEK.auth.exception.InvalidTokenException;
 import com.example.KTB_5WEEK.auth.repository.TokenRepository;
 import com.example.KTB_5WEEK.auth.service.decoder.Decoder;
 import com.example.KTB_5WEEK.auth.service.encoder.Encoder;
@@ -62,9 +63,13 @@ public class TokenService {
 
     // 토큰 검증
     @Loggable
-    public Optional<String> verify(String token) {
+    public Optional<Boolean> verify(String token) {
         String[] parts = token.split("\\.");
-        if (parts.length != 3) return Optional.ofNullable(null);
+        if (parts.length != 3) return Optional.ofNullable(false);
+
+        if (tokenRepository.isBlackList(token).get()) {
+            throw new AlreadyExpiredToken();
+        }
 
         try {
             Map<String, Object> header = objectMapper.readValue(decoder.decode(parts[0]),
@@ -75,19 +80,19 @@ public class TokenService {
                     });
 
             if (!header.get("alg").equals(encryptor.getAlgorithm()) || !header.get("typ").equals("JWT")) {
-                return Optional.ofNullable(null);
+                return Optional.ofNullable(false);
             }
 
             if (!parts[2].equals(encoder.encodeToString(encryptor.encrypt(parts[0] + "." + parts[1], secret_key)))) {
-                return Optional.ofNullable(null);
+                return Optional.ofNullable(false);
             }
 
             long now = System.currentTimeMillis();
             long exp = ((Number) payload.get("exp")).longValue();
-            if (exp < now) return Optional.ofNullable(null);
+            if (exp < now) return Optional.ofNullable(false);
 
-            String verifyString = payload.get("sub").toString();
-            return Optional.ofNullable(verifyString);
+//            String verifyString = payload.get("sub").toString();
+            return Optional.ofNullable(false);
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
@@ -95,8 +100,12 @@ public class TokenService {
 
     // 토큰 무효화
     @Loggable
-    public boolean expire(String token) {
-        tokenRepository.isBlackList(token).orElseThrow(() -> new AlreadyExpiredToken());
-        return tokenRepository.toBlackList(token).orElseThrow(() -> new FailTokenExpireException());
+    public boolean expire(String authorization) {
+        if (authorization != null && authorization.startsWith("Bearer ")) {
+            String token = authorization.substring(7);
+            tokenRepository.isBlackList(token).orElseThrow(() -> new AlreadyExpiredToken());
+            return tokenRepository.toBlackList(token).orElseThrow(() -> new FailTokenExpireException());
+        }
+        throw new InvalidTokenException();
     }
 }

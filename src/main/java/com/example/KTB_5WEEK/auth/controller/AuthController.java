@@ -39,9 +39,9 @@ public class AuthController implements AuthApiDoc {
     }
 
     @PostMapping("/logout") // 로그아웃
-    public ResponseEntity<BaseResponse> logout(HttpServletRequest request
-            , @RequestHeader("Authorization") String authorization) {
-        tokenService.expire(authorization.substring(7));
+    public ResponseEntity<BaseResponse> logout(HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
+        tokenService.expire(authorization);
         BaseResponse response = authService.logout();
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);

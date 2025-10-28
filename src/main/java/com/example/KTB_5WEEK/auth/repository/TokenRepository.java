@@ -24,6 +24,7 @@ public class TokenRepository {
     }
 
     public Optional<Boolean> toBlackList(String token) {
+        System.out.println(tokenBlackListTable.getTable());
         return Optional.ofNullable(tokenBlackListTable.getTable().add(token));
     }
 }

@@ -40,7 +40,8 @@ public enum ErrorCode {
     COMMENT_DELETE_ERROR(500, HttpStatus.INTERNAL_SERVER_ERROR, "댓글 삭제 실패"),
 
     // Auth
-    ALREADY_BLACKLIST_TOKEN(401, HttpStatus.UNAUTHORIZED,"이미 무효화된 토큰입니다."),
+    INVALID_TOKEN(400, HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰입니다."),
+    ALREADY_BLACKLIST_TOKEN(401, HttpStatus.UNAUTHORIZED,"이미 무효화된 토큰입니다.(재로그인 필요)"),
     UNAUTHORIZED(401, HttpStatus.UNAUTHORIZED,"로그인 인증이 필요합니다."),
     FAIL_TOKEN_EXPIRE(500, HttpStatus.INTERNAL_SERVER_ERROR, "토큰 무효화 실패");
 

@@ -23,8 +23,8 @@ public class TokenAuthInterceptor implements HandlerInterceptor {
         String authorization = request.getHeader("Authorization");
         if (authorization != null && authorization.startsWith("Bearer ")) {
             String token = authorization.substring(7);
-            String verifyToken = tokenService.verify(token).orElseThrow(() -> new UnAuthorizedException());
-            request.setAttribute("verifyToken", verifyToken);
+            tokenService.verify(token).orElseThrow(() -> new UnAuthorizedException());
+//            request.setAttribute("verifyToken", verifyToken);
             return true;
         } else {
             throw new UnAuthorizedException();
