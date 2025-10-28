@@ -22,6 +22,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/user/nickname/double-check",
                         "/user/email/double-check",
                         "/api-docs/**",
-                        "/swagger-ui/**");
+                        "/swagger-ui/**",
+                        "/error/**");
     }
 }
