@@ -13,12 +13,12 @@ public class RegistUserRequestDto {
     private String email;
 
     @NotBlank(message = "비밀번호는 필수 입력입니다.")
-    @Size(min = 0, max = 20)
+    @Size(min = 1, max = 20)
     @Schema(description = "회원가입시 사용할 비밀번호", example = "1q2w3e4r!Q")
     private String password;
 
     @NotBlank(message = "닉네임은 필수 입력입니다.")
-    @Size(min = 0, max = 10)
+    @Size(min = 1, max = 10)
     @Schema(description = "회원가입시 사용할 닉네임", example = "nickname")
     private String nickname;
 
